@@ -561,6 +561,162 @@
             background: var(--rouge-sombre);
         }
 
+        /* Amazon Affiliate Énigmatique */
+        .amazon-enigma {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            border: 1px solid rgba(196, 30, 58, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .amazon-enigma::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .enigma-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .enigma-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--rouge);
+            color: var(--blanc);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 30px rgba(196, 30, 58, 0.5);
+        }
+
+        .enigma-header p {
+            color: var(--gris-400);
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .enigma-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .enigma-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.75rem 1.25rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enigma-card::after {
+            content: '?';
+            position: absolute;
+            bottom: -20px;
+            right: -10px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            color: rgba(196, 30, 58, 0.1);
+            line-height: 1;
+            transition: all 0.4s;
+        }
+
+        .enigma-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--rouge);
+            background: rgba(196, 30, 58, 0.1);
+            box-shadow: 0 20px 40px rgba(196, 30, 58, 0.3);
+        }
+
+        .enigma-card:hover::after {
+            color: rgba(196, 30, 58, 0.2);
+            transform: scale(1.1);
+        }
+
+        .enigma-question {
+            color: var(--blanc);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .enigma-reveal {
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .enigma-answer {
+            display: inline-block;
+            color: var(--rouge);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--rouge);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .enigma-card:hover .enigma-answer {
+            background: var(--rouge);
+            color: var(--blanc);
+        }
+
+        .enigma-disclosure {
+            display: block;
+            text-align: center;
+            color: var(--gris-500);
+            font-size: 0.7rem;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .enigma-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .enigma-cards { grid-template-columns: 1fr; }
+            .amazon-enigma { padding: 1.5rem; }
+            .enigma-card { min-height: 150px; }
+        }
+
         /* Team Preview */
         .team-preview {
             padding: 3rem 0;
@@ -705,6 +861,7 @@
             .nav { flex-wrap: wrap; gap: 1rem; }
             .articles-grid { grid-template-columns: repeat(2, 1fr); }
             .hero-main { min-height: 350px; }
+            .rubrique-link { padding: 0.75rem 1rem; font-size: 0.8rem; }
             .hero-main h1 { font-size: 1.75rem; }
             .team-grid { grid-template-columns: repeat(2, 1fr); }
             .newsletter-form { flex-direction: column; }
@@ -715,6 +872,8 @@
             .articles-grid { grid-template-columns: 1fr; }
             .hero-side-card { grid-template-columns: 1fr; }
             .hero-side-card img { width: 100%; height: 150px; }
+            .rubrique-link { padding: 0.6rem 0.75rem; font-size: 0.75rem; }
+            .rubriques-header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
         }
 
         /* Loading skeleton */
@@ -729,61 +888,106 @@
             100% { background-position: -200% 0; }
         }
     
-        /* Category Filter Tabs - Style shadcn */
-        .category-filters {
+        /* Rubriques - Style Journal Élégant */
+        .rubriques-section {
+            padding: 0;
+            border-top: 3px solid var(--noir);
+            border-bottom: 1px solid var(--gris-300);
+            margin: 2rem 0;
+            background: var(--blanc);
+        }
+
+        .rubriques-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 1.5rem 0;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .rubriques-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gris-500);
+        }
+
+        .rubriques-nav {
+            display: flex;
+            align-items: center;
+            gap: 0;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
-        .category-filters::-webkit-scrollbar { display: none; }
+        .rubriques-nav::-webkit-scrollbar { display: none; }
 
-        .category-filter-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--gris-200);
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--gris-600);
-            background: var(--blanc);
+        .rubrique-link {
+            position: relative;
+            padding: 1rem 1.25rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--noir);
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: all 0.2s;
             white-space: nowrap;
-        }
-        .category-filter-btn:hover {
-            border-color: var(--gris-400);
-            background: var(--gris-50);
-        }
-        .category-filter-btn.active {
-            background: var(--noir);
-            color: var(--blanc);
-            border-color: var(--noir);
-        }
-        .category-filter-btn .count {
-            background: var(--gris-100);
-            padding: 0.15rem 0.5rem;
-            border-radius: 9999px;
-            font-size: 0.7rem;
-        }
-        .category-filter-btn.active .count {
-            background: rgba(255,255,255,0.2);
+            transition: color 0.2s;
+            text-transform: capitalize;
         }
 
-        /* Couleurs par catégorie */
-        .badge-cat-economique { background: #DC2626 !important; }
-        .badge-cat-societal { background: #7C3AED !important; }
-        .badge-cat-politique { background: #2563EB !important; }
-        .badge-cat-sanitaire { background: #059669 !important; }
-        .badge-cat-ecologique { background: #16A34A !important; }
-        .badge-cat-technologique { background: #0891B2 !important; }
-        .badge-cat-moral { background: #DB2777 !important; }
-        .badge-cat-culturel { background: #9333EA !important; }
+        .rubrique-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--rouge);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .rubrique-link:hover {
+            color: var(--rouge);
+        }
+
+        .rubrique-link:hover::after {
+            width: 100%;
+        }
+
+        .rubrique-link.active {
+            color: var(--rouge);
+        }
+
+        .rubrique-link.active::after {
+            width: 100%;
+        }
+
+        /* Séparateurs entre rubriques */
+        .rubrique-link:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 1rem;
+            width: 1px;
+            background: var(--gris-300);
+        }
+
+        /* Badge catégories dans articles - Style sobre */
+        .badge-cat {
+            background: var(--noir) !important;
+            color: var(--blanc) !important;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         .section-title-with-filter {
             display: flex;
@@ -795,9 +999,28 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
         }
+        .filter-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
         .filter-count {
             font-size: 0.85rem;
             color: var(--gris-500);
+        }
+        .filter-reset {
+            font-size: 0.75rem;
+            color: var(--rouge);
+            background: none;
+            border: 1px solid var(--rouge);
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-reset:hover {
+            background: var(--rouge);
+            color: var(--blanc);
         }
 
 
@@ -867,47 +1090,74 @@
             </div>
         </section>
 
+        <!-- Amazon Affiliate Énigmatique -->
+        <section class="amazon-enigma">
+            <div class="enigma-header">
+                <span class="enigma-badge">?</span>
+                <p>Peut-être avez-vous besoin de...</p>
+            </div>
+            <div class="enigma-cards">
+                <a href="https://www.amazon.fr/dp/B09Y2MYL5C?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="enigma-card">
+                    <div class="enigma-question">Vous ne supportez plus le monde qui vous entoure ?</div>
+                    <div class="enigma-reveal">
+                        <span class="enigma-answer">Découvrir la solution →</span>
+                    </div>
+                </a>
+                <a href="https://www.amazon.fr/dp/B0D798Q29V?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="enigma-card">
+                    <div class="enigma-question">Envie de disparaître sans laisser de traces ?</div>
+                    <div class="enigma-reveal">
+                        <span class="enigma-answer">Découvrir la solution →</span>
+                    </div>
+                </a>
+                <a href="https://www.amazon.fr/dp/2021223310?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="enigma-card">
+                    <div class="enigma-question">Besoin de comprendre pourquoi tout s'effondre ?</div>
+                    <div class="enigma-reveal">
+                        <span class="enigma-answer">Découvrir la solution →</span>
+                    </div>
+                </a>
+                <a href="https://www.amazon.fr/dp/2226257012?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="enigma-card">
+                    <div class="enigma-question">Envie de comprendre comment on en est arrivé là ?</div>
+                    <div class="enigma-reveal">
+                        <span class="enigma-answer">Découvrir la solution →</span>
+                    </div>
+                </a>
+            </div>
+            <small class="enigma-disclosure">Liens affiliés Amazon</small>
+        </section>
+
         <!-- Section: Dernières Catastrophes -->
         <div class="section-header">
             <h2 class="section-title">Dernières <span>Catastrophes</span></h2>
             <a href="#" class="section-link">Voir tout →</a>
         </div>
         
-        <!-- Category Filters -->
-        <div class="container">
-            <div class="section-title-with-filter">
-                <h2>Toutes les catastrophes</h2>
-                <span class="filter-count" id="filter-count">11 articles</span>
+        <!-- Rubriques Style Journal -->
+        <section class="rubriques-section">
+            <div class="container">
+                <div class="rubriques-header">
+                    <h2>Rubriques</h2>
+                    <div class="filter-info">
+                        <span class="filter-count" id="filter-count"></span>
+                        <button class="filter-reset" id="filter-reset" style="display:none;">× Effacer</button>
+                    </div>
+                </div>
+                <nav class="rubriques-nav" id="category-filters">
+                    <button class="rubrique-link active" data-category="all">Tout</button>
+                    <button class="rubrique-link" data-category="CHAOS POLITIQUE">Chaos Politique</button>
+                    <button class="rubrique-link" data-category="EFFONDREMENT ECONOMIQUE">Effondrement Économique</button>
+                    <button class="rubrique-link" data-category="DECLIN SOCIETAL">Déclin Sociétal</button>
+                    <button class="rubrique-link" data-category="DESASTRE ECOLOGIQUE">Désastre Écologique</button>
+                    <button class="rubrique-link" data-category="FIASCO TECHNOLOGIQUE">Fiasco Technologique</button>
+                    <button class="rubrique-link" data-category="CRISE SANITAIRE">Crise Sanitaire</button>
+                    <button class="rubrique-link" data-category="SCANDALE MORAL">Scandale Moral</button>
+                    <button class="rubrique-link" data-category="NAUFRAGE CULTUREL">Naufrage Culturel</button>
+                </nav>
             </div>
-            <div class="category-filters" id="category-filters">
-                <button class="category-filter-btn active" data-category="all">
-                    Tout voir
-                </button>
-                <button class="category-filter-btn" data-category="EFFONDREMENT ECONOMIQUE">
-                    💸 Économique
-                </button>
-                <button class="category-filter-btn" data-category="CHAOS POLITIQUE">
-                    🏛️ Politique
-                </button>
-                <button class="category-filter-btn" data-category="DECLIN SOCIETAL">
-                    👥 Sociétal
-                </button>
-                <button class="category-filter-btn" data-category="FIASCO TECHNOLOGIQUE">
-                    💻 Technologique
-                </button>
-                <button class="category-filter-btn" data-category="DESASTRE ECOLOGIQUE">
-                    🌍 Écologique
-                </button>
-                <button class="category-filter-btn" data-category="CRISE SANITAIRE">
-                    🏥 Sanitaire
-                </button>
-                <button class="category-filter-btn" data-category="SCANDALE MORAL">
-                    ⚖️ Moral
-                </button>
-                <button class="category-filter-btn" data-category="NAUFRAGE CULTUREL">
-                    🎭 Culturel
-                </button>
-            </div>
+        </section>
+
+        <!-- Articles Section Title -->
+        <div class="section-title-with-filter">
+            <h2 id="articles-section-title">Toutes les catastrophes</h2>
         </div>
 
         <section class="articles-grid" id="articles-grid">
@@ -936,10 +1186,10 @@
         <div class="newsletter-banner" id="newsletter">
             <div class="newsletter-content">
                 <h3>📰 Newsletter du Désespoir</h3>
-                <p>Recevez chaque matin votre dose de mauvaises nouvelles. Gratuit (comme les larmes).</p>
+                <p>Chaque dimanche, le digest des pires nouvelles de la semaine. Gratuit (comme les larmes).</p>
             </div>
-            <form class="newsletter-form" onsubmit="return false;">
-                <input type="email" placeholder="votre@email.com" required>
+            <form class="newsletter-form" id="newsletter-form-main" onsubmit="return subscribeNewsletter(event, this)">
+                <input type="email" name="email" placeholder="votre@email.com" required>
                 <button type="submit">S'abonner au malheur</button>
             </form>
         </div>
@@ -996,6 +1246,8 @@
     </footer>
 
     <script>
+        console.log("TVM: Script starting...");
+
         // Date formatting
         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const today = new Date().toLocaleDateString('fr-FR', dateOptions);
@@ -1022,12 +1274,19 @@
 
         // Load articles
         async function loadArticles() {
+            console.log("TVM: loadArticles() called");
             try {
+                console.log("TVM: Fetching liste.json...");
                 const res = await fetch('/articles/liste.json');
+                console.log("TVM: Response status:", res.status);
                 const articles = await res.json();
+                console.log("TVM: Articles loaded:", articles.length);
                 allArticles = articles;
 
-                if (!articles || articles.length === 0) return;
+                if (!articles || articles.length === 0) {
+                    console.log("TVM: No articles found!");
+                    return;
+                }
 
                 // Hero (first article)
                 const hero = articles[0];
@@ -1058,7 +1317,7 @@
                             <img src="${a.image}" alt="${a.title}" onerror="this.style.background='#ddd'">
                         </div>
                         <div class="article-card-content">
-                            <span class="badge badge-red" style="font-size:0.65rem;margin-bottom:0.5rem;" class="${getCategoryClass(a.category)}">${a.category || 'ACTUALITÉ'}</span>
+                            <span class="badge badge-red" style="font-size:0.65rem;margin-bottom:0.5rem;">${a.category || 'ACTUALITÉ'}</span>
                             <h3>${a.title}</h3>
                             <p>${a.excerpt || ''}</p>
                             <div class="article-card-footer">
@@ -1090,7 +1349,10 @@
                 }
 
             } catch (err) {
-                console.error('Erreur chargement:', err);
+                console.error('TVM ERROR:', err);
+                // Afficher l'erreur visuellement
+                document.getElementById('hero-title').textContent = 'Erreur: ' + err.message;
+                document.getElementById('hero-title').style.color = 'red';
             }
         }
 
@@ -1120,7 +1382,7 @@
                 : allArticles.filter(a => a.category === category);
 
             document.getElementById('filter-count').textContent =
-                filtered.length + ' article' + (filtered.length > 1 ? 's' : '');
+                category === 'all' ? '' : filtered.length + ' article' + (filtered.length > 1 ? 's' : '');
 
             // Update grid
             document.getElementById('articles-grid').innerHTML = filtered.slice(0, 12).map(a => `
@@ -1141,18 +1403,68 @@
             `).join('');
 
             // Update active button
-            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+            document.querySelectorAll('.rubrique-link').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.category === category);
             });
+
+            // Show/hide reset
+            document.getElementById('filter-reset').style.display = category === 'all' ? 'none' : 'inline-block';
         }
 
-        // Setup filter buttons
-        document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        // Setup filter buttons (rubriques)
+        document.querySelectorAll('.rubrique-link').forEach(btn => {
             btn.addEventListener('click', () => filterArticles(btn.dataset.category));
         });
 
+        // Reset filter button
+        document.getElementById('filter-reset').addEventListener('click', () => filterArticles('all'));
 
         loadArticles();
+
+        // Newsletter subscription
+        async function subscribeNewsletter(e, form) {
+            e.preventDefault();
+            const email = form.email.value;
+            const btn = form.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = 'Envoi...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/v2/newsletter.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email})
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    btn.textContent = '✓ Inscrit !';
+                    btn.style.background = '#22c55e';
+                    form.email.value = '';
+                    // Afficher message de confirmation
+                    const msg = document.createElement('div');
+                    msg.innerHTML = "<br><small style='color:#22c55e;'>📧 Un email de confirmation vient d'être envoyé. Cliquez sur le lien pour valider.</small>";
+                    form.appendChild(msg);
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                        msg.remove();
+                    }, 5000);
+                } else {
+                    throw new Error(data.error || 'Erreur');
+                }
+            } catch (err) {
+                btn.textContent = 'Erreur, réessayez';
+                btn.style.background = '#ef4444';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 2000);
+            }
+            return false;
+        }
     </script>
 </body>
 </html>

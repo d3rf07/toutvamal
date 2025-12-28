@@ -1,12 +1,70 @@
-# Force no-cache pour debug
-<IfModule mod_headers.c>
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires 0
-</IfModule>
+# ToutVaMal v3.0 - Configuration Apache
 
-# Existing rules
+# Enable rewrite
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
+
+    # Force HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# Block sensitive files
+<FilesMatch "^\.(htaccess|htpasswd|git|env|gitignore)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Block PHP info/config files ONLY at root level (not in subdirectories)
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} ^/(phpinfo|info|test)\.php$ [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# NO CACHE for HTML (development mode)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# NO CACHE for JSON (liste.json)
+<IfModule mod_headers.c>
+    <FilesMatch "liste\.json$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+# Caching for static assets (images only now)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+</IfModule>
+
+# Error pages
+ErrorDocument 404 /404.html
