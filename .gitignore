@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+temp_*
+
+# Secrets (API keys should not be committed)
+# Note: workflow-n8n.json contains sanitized config only

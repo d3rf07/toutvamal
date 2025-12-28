@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOUTVAMAL.FR - Le journal qui va mal</title>
+    <meta name="description" content="L'actualité française vue par ceux qui savent que tout va mal. Parce qu'avant, c'était mieux.">
+    <meta property="og:title" content="TOUTVAMAL.FR - Le journal qui va mal">
+    <meta property="og:description" content="C'était mieux avant, mais ce sera pire demain.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://toutvamal.fr">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --rouge: #C41E3A;
+            --rouge-sombre: #991B1B;
+            --noir: #0A0A0A;
+            --gris-900: #111827;
+            --gris-800: #1F2937;
+            --gris-700: #374151;
+            --gris-600: #4B5563;
+            --gris-500: #6B7280;
+            --gris-400: #9CA3AF;
+            --gris-300: #D1D5DB;
+            --gris-200: #E5E7EB;
+            --gris-100: #F3F4F6;
+            --gris-50: #F9FAFB;
+            --blanc: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--blanc);
+            color: var(--noir);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; transition: color 0.2s; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+                /* Breaking News Ticker */
+        .ticker-wrap {
+            background: var(--rouge);
+            color: var(--blanc);
+            display: flex;
+            align-items: stretch;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .ticker-label {
+            display: flex;
+            align-items: center;
+            background: var(--rouge-sombre);
+            padding: 0 1.25rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        
+        .ticker-track {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .ticker-content {
+            display: flex;
+            animation: ticker 40s linear infinite;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .ticker-content span {
+            padding: 0 1.5rem;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--blanc);
+            border-bottom: 1px solid var(--gris-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gris-100);
+        }
+
+        .header-date {
+            font-size: 0.8rem;
+            color: var(--gris-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.75rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .logo span { color: var(--rouge); }
+        
+        .logo-tagline {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gris-500);
+            margin-top: 0.25rem;
+        }
+
+        .header-cta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--rouge);
+            color: var(--blanc);
+        }
+        
+        .btn-primary:hover {
+            background: var(--rouge-sombre);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--gris-700);
+            border: 1px solid var(--gris-300);
+        }
+
+        .btn-ghost:hover {
+            background: var(--gris-100);
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 0.9rem 0;
+        }
+
+        .nav a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gris-700);
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav a:hover, .nav a.active {
+            color: var(--rouge);
+            border-bottom-color: var(--rouge);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .hero-main {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 520px;
+        }
+
+        .hero-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-main-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .hero-main-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            color: var(--blanc);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .badge-red { background: var(--rouge); color: var(--blanc); }
+        .badge-dark { background: var(--gris-800); color: var(--blanc); }
+
+        .hero-main h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero-main p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .hero-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hero-side-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gris-50);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .hero-side-card:hover {
+            background: var(--gris-100);
+            transform: translateX(4px);
+        }
+
+        .hero-side-card img {
+            width: 120px;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .hero-side-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-side-card time {
+            font-size: 0.75rem;
+            color: var(--gris-500);
+        }
+
+        /* Section Title */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 0 1.5rem;
+            border-bottom: 2px solid var(--noir);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+        }
+
+        .section-title span { color: var(--rouge); }
+
+        .section-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--rouge);
+        }
+
+        .section-link:hover { text-decoration: underline; }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            padding: 1.5rem 0 3rem;
+        }
+
+        .article-card {
+            position: relative;
+            background: var(--blanc);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .article-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .article-card-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .article-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .article-card:hover .article-card-image img {
+            transform: scale(1.08);
+        }
+
+        .article-card-content {
+            padding: 1.25rem;
+        }
+
+        .article-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 0.75rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-card p {
+            font-size: 0.875rem;
+            color: var(--gris-600);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .article-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gris-500);
+        }
+
+        /* Featured Section (Large + Small) */
+        .featured-section {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .featured-large {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .featured-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+        }
+
+        .featured-large-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%);
+        }
+
+        .featured-large-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            color: var(--blanc);
+        }
+
+        .featured-large h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-small-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .featured-small-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--gris-50);
+            transition: all 0.2s;
+        }
+
+        .featured-small-item:hover {
+            background: var(--gris-100);
+        }
+
+        .featured-small-item img {
+            width: 100px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .featured-small-item h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-small-item time {
+            font-size: 0.75rem;
+            color: var(--gris-500);
+        }
+
+        /* Newsletter Banner */
+        .newsletter-banner {
+            background: linear-gradient(135deg, var(--gris-900) 0%, var(--noir) 100%);
+            padding: 3rem;
+            border-radius: 16px;
+            margin: 3rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .newsletter-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--blanc);
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-content p {
+            color: var(--gris-400);
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.9rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: 280px;
+        }
+
+        .newsletter-form button {
+            padding: 0.9rem 1.75rem;
+            background: var(--rouge);
+            color: var(--blanc);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--rouge-sombre);
+        }
+
+        /* Team Preview */
+        .team-preview {
+            padding: 3rem 0;
+            border-top: 1px solid var(--gris-200);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: var(--gris-50);
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            background: var(--gris-100);
+            transform: translateY(-4px);
+        }
+
+        .team-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--blanc);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .team-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-card p {
+            font-size: 0.75rem;
+            color: var(--gris-500);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--noir);
+            color: var(--blanc);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand h2 span { color: var(--rouge); }
+
+        .footer-brand p {
+            font-style: italic;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-brand .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gris-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .footer-brand .social-links a:hover {
+            background: var(--rouge);
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+            color: var(--gris-400);
+        }
+
+        .footer-col a {
+            display: block;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .footer-col a:hover { opacity: 1; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .articles-grid { grid-template-columns: repeat(3, 1fr); }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 992px) {
+            .hero-section { grid-template-columns: 1fr; }
+            .hero-sidebar { flex-direction: row; flex-wrap: wrap; }
+            .hero-side-card { flex: 1; min-width: 280px; }
+            .featured-section { grid-template-columns: 1fr; }
+            .newsletter-banner { flex-direction: column; text-align: center; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 2rem; }
+            .header-top { flex-direction: column; gap: 1rem; }
+            .nav { flex-wrap: wrap; gap: 1rem; }
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-main { min-height: 350px; }
+            .hero-main h1 { font-size: 1.75rem; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-form input { width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .articles-grid { grid-template-columns: 1fr; }
+            .hero-side-card { grid-template-columns: 1fr; }
+            .hero-side-card img { width: 100%; height: 150px; }
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--gris-100) 25%, var(--gris-200) 50%, var(--gris-100) 75%);
+            background-size: 200% 100%;
+            animation: skeleton 1.5s infinite;
+        }
+
+        @keyframes skeleton {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    
+        /* Category Filter Tabs - Style shadcn */
+        .category-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .category-filters::-webkit-scrollbar { display: none; }
+
+        .category-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gris-200);
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--gris-600);
+            background: var(--blanc);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .category-filter-btn:hover {
+            border-color: var(--gris-400);
+            background: var(--gris-50);
+        }
+        .category-filter-btn.active {
+            background: var(--noir);
+            color: var(--blanc);
+            border-color: var(--noir);
+        }
+        .category-filter-btn .count {
+            background: var(--gris-100);
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+        }
+        .category-filter-btn.active .count {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Couleurs par catégorie */
+        .badge-cat-economique { background: #DC2626 !important; }
+        .badge-cat-societal { background: #7C3AED !important; }
+        .badge-cat-politique { background: #2563EB !important; }
+        .badge-cat-sanitaire { background: #059669 !important; }
+        .badge-cat-ecologique { background: #16A34A !important; }
+        .badge-cat-technologique { background: #0891B2 !important; }
+        .badge-cat-moral { background: #DB2777 !important; }
+        .badge-cat-culturel { background: #9333EA !important; }
+
+        .section-title-with-filter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .section-title-with-filter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+        .filter-count {
+            font-size: 0.85rem;
+            color: var(--gris-500);
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Breaking News Ticker -->
+    <div class="ticker-wrap">
+        <span class="ticker-label">🚨 ALERTE</span>
+        <div class="ticker-track">
+            <div class="ticker-content">
+                <span>La France continue de s'effondrer •</span>
+                <span>Les Français n'ont jamais été aussi malheureux depuis 1347 •</span>
+                <span>Un boulanger ferme, c'est toute une civilisation qui s'écroule •</span>
+                <span id="current-date-ticker"></span>
+                <span>"Parce qu'avant, c'était mieux" •</span>
+                <span>La France continue de s'effondrer •</span>
+                <span>Les Français n'ont jamais été aussi malheureux depuis 1347 •</span>
+                <span>Un boulanger ferme, c'est toute une civilisation qui s'écroule •</span>
+                <span>"Parce qu'avant, c'était mieux" •</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <span class="header-date" id="header-date"></span>
+                <a href="/" class="logo">
+                    TOUTVAMAL<span>.FR</span>
+                    <span class="logo-tagline">C'était mieux avant, mais ce sera pire demain</span>
+                </a>
+                <div class="header-cta">
+                    <a href="/equipe.html" class="btn btn-ghost">La Rédaction</a>
+                    <a href="#newsletter" class="btn btn-primary">Newsletter</a>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="/" class="active">Accueil</a>
+                <a href="/equipe.html">Équipe</a>
+                <a href="/a-propos.html">À propos</a>
+                <a href="/contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero-section">
+            <a href="#" class="hero-main" id="hero-main">
+                <img src="/images/default.webp" alt="" id="hero-img">
+                <div class="hero-main-overlay"></div>
+                <div class="hero-main-content">
+                    <span class="badge badge-red" id="hero-badge">CATASTROPHE</span>
+                    <h1 id="hero-title">Chargement des catastrophes...</h1>
+                    <p id="hero-excerpt">Veuillez patienter pendant que nous préparons votre dose de désespoir quotidien.</p>
+                    <div class="hero-meta">
+                        <span id="hero-date"></span>
+                        <span>•</span>
+                        <span id="hero-author"></span>
+                    </div>
+                </div>
+            </a>
+            <div class="hero-sidebar" id="hero-sidebar">
+                <!-- Loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Section: Dernières Catastrophes -->
+        <div class="section-header">
+            <h2 class="section-title">Dernières <span>Catastrophes</span></h2>
+            <a href="#" class="section-link">Voir tout →</a>
+        </div>
+        
+        <!-- Category Filters -->
+        <div class="container">
+            <div class="section-title-with-filter">
+                <h2>Toutes les catastrophes</h2>
+                <span class="filter-count" id="filter-count">11 articles</span>
+            </div>
+            <div class="category-filters" id="category-filters">
+                <button class="category-filter-btn active" data-category="all">
+                    Tout voir
+                </button>
+                <button class="category-filter-btn" data-category="EFFONDREMENT ECONOMIQUE">
+                    💸 Économique
+                </button>
+                <button class="category-filter-btn" data-category="CHAOS POLITIQUE">
+                    🏛️ Politique
+                </button>
+                <button class="category-filter-btn" data-category="DECLIN SOCIETAL">
+                    👥 Sociétal
+                </button>
+                <button class="category-filter-btn" data-category="FIASCO TECHNOLOGIQUE">
+                    💻 Technologique
+                </button>
+                <button class="category-filter-btn" data-category="DESASTRE ECOLOGIQUE">
+                    🌍 Écologique
+                </button>
+                <button class="category-filter-btn" data-category="CRISE SANITAIRE">
+                    🏥 Sanitaire
+                </button>
+                <button class="category-filter-btn" data-category="SCANDALE MORAL">
+                    ⚖️ Moral
+                </button>
+                <button class="category-filter-btn" data-category="NAUFRAGE CULTUREL">
+                    🎭 Culturel
+                </button>
+            </div>
+        </div>
+
+        <section class="articles-grid" id="articles-grid">
+            <!-- Loaded dynamically -->
+        </section>
+
+        <!-- Featured Section -->
+        <section class="featured-section" id="featured-section">
+            <a href="#" class="featured-large" id="featured-large">
+                <img src="/images/default.webp" alt="">
+                <div class="featured-large-overlay"></div>
+                <div class="featured-large-content">
+                    <span class="badge badge-dark">À LA UNE</span>
+                    <h2>Article mis en avant</h2>
+                    <div class="hero-meta">
+                        <span>Date</span>
+                    </div>
+                </div>
+            </a>
+            <div class="featured-small-list" id="featured-small">
+                <!-- Loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Newsletter Banner -->
+        <div class="newsletter-banner" id="newsletter">
+            <div class="newsletter-content">
+                <h3>📰 Newsletter du Désespoir</h3>
+                <p>Recevez chaque matin votre dose de mauvaises nouvelles. Gratuit (comme les larmes).</p>
+            </div>
+            <form class="newsletter-form" onsubmit="return false;">
+                <input type="email" placeholder="votre@email.com" required>
+                <button type="submit">S'abonner au malheur</button>
+            </form>
+        </div>
+
+        <!-- Team Preview -->
+        <section class="team-preview">
+            <div class="section-header">
+                <h2 class="section-title">Notre <span>Rédaction</span></h2>
+                <a href="/equipe.html" class="section-link">Voir l'équipe →</a>
+            </div>
+            <div class="team-grid" id="team-grid">
+                <!-- Loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>TOUTVAMAL<span>.FR</span></h2>
+                    <p>"C'était mieux avant, et ce sera pire demain"</p>
+                    <div class="social-links">
+                        <a href="#" title="Twitter">𝕏</a>
+                        <a href="#" title="Facebook">f</a>
+                        <a href="#" title="Instagram">📷</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="/">Accueil</a>
+                    <a href="/equipe.html">L'équipe</a>
+                    <a href="/a-propos.html">À propos</a>
+                    <a href="/contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Informations</h4>
+                    <a href="/a-propos.html">Qui sommes-nous</a>
+                    <a href="/contact.html">Nous contacter</a>
+                    <a href="#newsletter">Newsletter</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Légal</h4>
+                    <a href="/a-propos.html">Mentions légales</a>
+                    <a href="/a-propos.html">CGU</a>
+                    <a href="/a-propos.html">Politique cookies</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 TOUTVAMAL.FR - Site satirique. Toute ressemblance avec la réalité serait désespérante.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Date formatting
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date().toLocaleDateString('fr-FR', dateOptions);
+        document.getElementById('header-date').textContent = today;
+        document.getElementById('current-date-ticker').textContent = today;
+
+        // Team data
+        const team = [
+            { id: 'jean-michel-deprime', nom: 'Jean-Michel Déprime', role: 'Rédacteur en chef' },
+            { id: 'martine-nostalgie', nom: 'Martine Nostalgie', role: 'Chroniqueuse' },
+            { id: 'pierre-catastrophe', nom: 'Pierre Catastrophe', role: 'Expert apocalypse' },
+            { id: 'rene-megot', nom: 'René Mégot', role: 'Éditorialiste' },
+            { id: 'chloe-decadence', nom: 'Chloé Décadence', role: 'Stagiaire' }
+        ];
+
+        // Render team
+        document.getElementById('team-grid').innerHTML = team.map(t => `
+            <a href="/equipe.html" class="team-card">
+                <img src="/equipe/${t.id}.webp" alt="${t.nom}" onerror="this.src='/equipe/default.webp'">
+                <h4>${t.nom}</h4>
+                <p>${t.role}</p>
+            </a>
+        `).join('');
+
+        // Load articles
+        async function loadArticles() {
+            try {
+                const res = await fetch('/articles/liste.json');
+                const articles = await res.json();
+                allArticles = articles;
+
+                if (!articles || articles.length === 0) return;
+
+                // Hero (first article)
+                const hero = articles[0];
+                document.getElementById('hero-main').href = '/articles/' + hero.filename;
+                document.getElementById('hero-img').src = hero.image;
+                document.getElementById('hero-img').alt = hero.title;
+                document.getElementById('hero-badge').textContent = hero.category || 'CATASTROPHE';
+                document.getElementById('hero-title').textContent = hero.title;
+                document.getElementById('hero-excerpt').textContent = hero.excerpt || '';
+                document.getElementById('hero-date').textContent = new Date(hero.date).toLocaleDateString('fr-FR');
+                document.getElementById('hero-author').textContent = hero.author ? 'Par ' + hero.author : '';
+
+                // Hero sidebar (2-4)
+                document.getElementById('hero-sidebar').innerHTML = articles.slice(1, 4).map(a => `
+                    <a href="/articles/${a.filename}" class="hero-side-card">
+                        <img src="${a.image}" alt="${a.title}" onerror="this.style.background='#ddd'">
+                        <div>
+                            <h3>${a.title}</h3>
+                            <time>${new Date(a.date).toLocaleDateString('fr-FR')}</time>
+                        </div>
+                    </a>
+                `).join('');
+
+                // Articles grid (5-12)
+                document.getElementById('articles-grid').innerHTML = articles.slice(4, 12).map(a => `
+                    <a href="/articles/${a.filename}" class="article-card">
+                        <div class="article-card-image">
+                            <img src="${a.image}" alt="${a.title}" onerror="this.style.background='#ddd'">
+                        </div>
+                        <div class="article-card-content">
+                            <span class="badge badge-red" style="font-size:0.65rem;margin-bottom:0.5rem;" class="${getCategoryClass(a.category)}">${a.category || 'ACTUALITÉ'}</span>
+                            <h3>${a.title}</h3>
+                            <p>${a.excerpt || ''}</p>
+                            <div class="article-card-footer">
+                                <time>${new Date(a.date).toLocaleDateString('fr-FR')}</time>
+                                <span>${a.author || 'Rédaction'}</span>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+
+                // Featured section (13+)
+                if (articles.length > 12) {
+                    const featured = articles[12];
+                    const featuredEl = document.getElementById('featured-large');
+                    featuredEl.href = '/articles/' + featured.filename;
+                    featuredEl.querySelector('img').src = featured.image;
+                    featuredEl.querySelector('h2').textContent = featured.title;
+                    featuredEl.querySelector('.hero-meta span').textContent = new Date(featured.date).toLocaleDateString('fr-FR');
+
+                    document.getElementById('featured-small').innerHTML = articles.slice(13, 17).map(a => `
+                        <a href="/articles/${a.filename}" class="featured-small-item">
+                            <img src="${a.image}" alt="" onerror="this.style.background='#ddd'">
+                            <div>
+                                <h4>${a.title}</h4>
+                                <time>${new Date(a.date).toLocaleDateString('fr-FR')}</time>
+                            </div>
+                        </a>
+                    `).join('');
+                }
+
+            } catch (err) {
+                console.error('Erreur chargement:', err);
+            }
+        }
+
+        
+        // Category filtering
+        let allArticles = [];
+        let currentFilter = 'all';
+
+        function getCategoryClass(category) {
+            const map = {
+                'EFFONDREMENT ECONOMIQUE': 'badge-cat-economique',
+                'DECLIN SOCIETAL': 'badge-cat-societal',
+                'CHAOS POLITIQUE': 'badge-cat-politique',
+                'CRISE SANITAIRE': 'badge-cat-sanitaire',
+                'DESASTRE ECOLOGIQUE': 'badge-cat-ecologique',
+                'FIASCO TECHNOLOGIQUE': 'badge-cat-technologique',
+                'SCANDALE MORAL': 'badge-cat-moral',
+                'NAUFRAGE CULTUREL': 'badge-cat-culturel'
+            };
+            return map[category] || '';
+        }
+
+        function filterArticles(category) {
+            currentFilter = category;
+            const filtered = category === 'all'
+                ? allArticles
+                : allArticles.filter(a => a.category === category);
+
+            document.getElementById('filter-count').textContent =
+                filtered.length + ' article' + (filtered.length > 1 ? 's' : '');
+
+            // Update grid
+            document.getElementById('articles-grid').innerHTML = filtered.slice(0, 12).map(a => `
+                <a href="/articles/${a.filename}" class="article-card" data-category="${a.category}">
+                    <div class="article-card-image">
+                        <img src="${a.image}" alt="${a.title}" onerror="this.style.background='#ddd'">
+                    </div>
+                    <div class="article-card-content">
+                        <span class="badge badge-red ${getCategoryClass(a.category)}" style="font-size:0.65rem;margin-bottom:0.5rem;">${a.category || 'ACTUALITÉ'}</span>
+                        <h3>${a.title}</h3>
+                        <p>${a.excerpt || ''}</p>
+                        <div class="article-card-footer">
+                            <time>${new Date(a.date).toLocaleDateString('fr-FR')}</time>
+                            <span>${a.author || 'Rédaction'}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+            // Update active button
+            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+        }
+
+        // Setup filter buttons
+        document.querySelectorAll('.category-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => filterArticles(btn.dataset.category));
+        });
+
+
+        loadArticles();
+    </script>
+</body>
+</html>

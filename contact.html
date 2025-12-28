@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ToutVaMal.fr</title>
+    <meta name="description" content="Contactez l'equipe de ToutVaMal.fr. Nous ne repondrons probablement pas, mais vous pouvez toujours essayer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#C41E3A">
+    <meta name="theme-color" content="#C41E3A">
+
+    <style>
+        :root {
+            --rouge: #C41E3A;
+            --rouge-sombre: #991B1B;
+            --noir: #0A0A0A;
+            --gris-900: #111827;
+            --gris-700: #374151;
+            --gris-500: #6B7280;
+            --gris-300: #D1D5DB;
+            --gris-200: #E5E7EB;
+            --gris-100: #F3F4F6;
+            --blanc: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--blanc);
+            color: var(--noir);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* Header */
+        .header {
+            background: var(--blanc);
+            border-bottom: 1px solid var(--gris-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+        }
+
+        .logo span { color: var(--rouge); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-links a { transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--rouge); }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--gris-100) 0%, var(--blanc) 100%);
+            padding: 4rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--noir);
+        }
+
+        .hero h1 span { color: var(--rouge); }
+
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--gris-600);
+            font-style: italic;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Contact Cards */
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: var(--blanc);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--gris-200);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .contact-card:hover {
+            border-color: var(--rouge);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(196, 30, 58, 0.15);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: var(--gris-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .contact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--noir);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--gris-700);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card .note {
+            font-size: 0.75rem;
+            color: var(--gris-500);
+            font-style: italic;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--gris-100);
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+
+        .form-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--noir);
+        }
+
+        .form-section h2 span { color: var(--rouge); }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--gris-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--blanc);
+            border: 1px solid var(--gris-300);
+            color: var(--noir);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--rouge);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Mood Selector */
+        .mood-indicator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .mood-option {
+            text-align: center;
+            padding: 1rem 0.5rem;
+            background: var(--blanc);
+            border: 1px solid var(--gris-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mood-option:hover {
+            border-color: var(--rouge);
+        }
+
+        .mood-option.selected {
+            background: var(--rouge);
+            color: var(--blanc);
+            border-color: var(--rouge);
+        }
+
+        .mood-option .emoji {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .mood-option .label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--rouge);
+            color: var(--blanc);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--rouge-sombre);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: var(--blanc);
+            border-left: 4px solid var(--rouge);
+            border-radius: 4px;
+        }
+
+        .disclaimer h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--rouge);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .disclaimer p {
+            color: var(--gris-600);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--blanc);
+            border: 1px solid var(--gris-200);
+            padding: 2rem;
+            border-radius: 16px;
+        }
+
+        .faq-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--noir);
+        }
+
+        .faq-item {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-item:first-child {
+            padding-top: 0;
+        }
+
+        .faq-question {
+            font-family: 'Playfair Display', serif;
+            color: var(--noir);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .faq-answer {
+            color: var(--gris-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--noir);
+            color: var(--gris-400);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--blanc);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo span { color: var(--rouge); }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .form-section { padding: 1.5rem; }
+            .mood-indicator { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { gap: 1rem; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links { display: none; }
+            .contact-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">TOUTVAM<span>AL</span></a>
+            <nav class="nav-links">
+                <a href="/">Accueil</a>
+                <a href="/equipe.html">Equipe</a>
+                <a href="/a-propos.html">A propos</a>
+                <a href="/contact.html" class="active">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Contactez-<span>nous</span></h1>
+        <p class="hero-tagline">Ou ne le faites pas. De toute facon, ca ne changera rien.</p>
+    </section>
+
+    <main class="main">
+        <div class="contact-options">
+            <div class="contact-card">
+                <div class="contact-icon">@</div>
+                <h3>Email</h3>
+                <p>contact@toutvamal.fr</p>
+                <p class="note">Delai de reponse : Entre jamais et l'infini</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">T</div>
+                <h3>Telephone</h3>
+                <p>0 800 MAL MAL</p>
+                <p class="note">Ligne occupee par nos propres plaintes</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">P</div>
+                <h3>Courrier</h3>
+                <p>BP 2025, 75000 Desespoir-sur-Seine</p>
+                <p class="note">La poste etant ce qu'elle est...</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">X</div>
+                <h3>Reseaux</h3>
+                <p>@ToutVaMalFR</p>
+                <p class="note">Nous tweetons nos desespoirs quotidiens</p>
+            </div>
+        </div>
+
+        <form class="form-section" onsubmit="handleSubmit(event)">
+            <h2>Formulaire de <span>lamentation</span></h2>
+
+            <div class="form-group">
+                <label for="name">Nom complet (pour nos registres du malheur)</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email (nous ne spammerons pas, a quoi bon ?)</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Categorie de plainte</label>
+                <select id="category" name="category" required>
+                    <option value="">-- Choisissez votre malheur --</option>
+                    <option value="article">Article trop optimiste</option>
+                    <option value="realite">La realite est pire que vos articles</option>
+                    <option value="collaboration">Je veux contribuer au declin</option>
+                    <option value="existentiel">Crise existentielle generale</option>
+                    <option value="technique">Bug (meme le site va mal)</option>
+                    <option value="autre">Autre catastrophe</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Votre humeur actuelle</label>
+                <div class="mood-indicator">
+                    <div class="mood-option" onclick="selectMood(this, 'deprime')">
+                        <span class="emoji">:(</span>
+                        <span class="label">Deprime</span>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this, 'desespere')">
+                        <span class="emoji">:'(</span>
+                        <span class="label">Desespere</span>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this, 'resigne')">
+                        <span class="emoji">:|</span>
+                        <span class="label">Resigne</span>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this, 'colere')">
+                        <span class="emoji">&gt;:(</span>
+                        <span class="label">En colere</span>
+                    </div>
+                </div>
+                <input type="hidden" id="mood" name="mood">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Votre message de detresse</label>
+                <textarea id="message" name="message" required
+                          placeholder="Exprimez votre desarroi ici..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Envoyer dans le vide
+            </button>
+
+            <div class="disclaimer">
+                <h4>Avertissement pessimiste</h4>
+                <p>
+                    En soumettant ce formulaire, vous acceptez que votre message soit
+                    probablement perdu dans les limbes numeriques. Nous ne garantissons
+                    ni lecture, ni reponse, ni meme reception. C'est ca aussi, le declin.
+                </p>
+            </div>
+        </form>
+
+        <div class="faq-section">
+            <h2>Questions Frequemment Desesperees</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Pourquoi ne repondez-vous jamais ?</div>
+                <div class="faq-answer">Parce que repondre supposerait qu'il y a de l'espoir que ca serve a quelque chose.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Puis-je proposer un article ?</div>
+                <div class="faq-answer">Oui, mais il sera probablement refuse. Pas assez pessimiste.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Comment puis-je me desabonner de la newsletter ?</div>
+                <div class="faq-answer">Vous n'etes pas abonne. Personne ne l'est. Meme nous, on ne veut pas la recevoir.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Proposez-vous des stages ?</div>
+                <div class="faq-answer">Oui, non remuneres evidemment. L'exploitation fait partie de la formation.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Votre site bug, que faire ?</div>
+                <div class="faq-answer">C'est normal. Meme notre code est deprime.</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">TOUTVAM<span>AL</span>.FR</div>
+        <p class="footer-tagline">C'etait mieux avant, mais ce sera pire demain.</p>
+        <p>&copy; 2025 ToutVaMal.fr - Site satirique</p>
+    </footer>
+
+    <script>
+        function selectMood(element, mood) {
+            document.querySelectorAll('.mood-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('mood').value = mood;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const btn = event.target.querySelector('.submit-btn');
+            btn.textContent = 'Envoi en cours...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                alert("Votre message a ete envoye avec succes dans le neant digital. " +
+                      "Nous ne le lirons probablement jamais, mais merci d'avoir essaye. " +
+                      "Cette tentative de communication n'aura servi a rien, comme prevu.");
+
+                event.target.reset();
+                document.querySelectorAll('.mood-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+
+                btn.textContent = 'Envoyer dans le vide';
+                btn.disabled = false;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
