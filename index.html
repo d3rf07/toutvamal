@@ -395,16 +395,12 @@
             box-shadow: 0 4px 12px rgba(196, 30, 58, 0.1);
         }
 
-        .hero-amazon-card .amazon-icon {
+        .hero-amazon-card .hero-amazon-img {
             width: 100px;
             height: 85px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            background: linear-gradient(135deg, var(--rouge) 0%, var(--rouge-sombre) 100%);
+            object-fit: cover;
             border-radius: 6px;
-            color: var(--blanc);
+            flex-shrink: 0;
         }
 
         .hero-amazon-card .amazon-label {
@@ -621,13 +617,21 @@
             border-color: var(--rouge);
         }
 
-        .amazon-card-inline .amazon-icon {
+        .amazon-card-inline .amazon-card-image {
             height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--gris-100) 0%, var(--gris-50) 100%);
-            font-size: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .amazon-card-inline .amazon-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .amazon-card-inline:hover .amazon-card-image img {
+            transform: scale(1.08);
         }
 
         .amazon-card-inline .amazon-content {
@@ -1467,7 +1471,7 @@
                     </a>
                 `).join('') + `
                     <a href="https://www.amazon.fr/dp/B09Y2MYL5C?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="hero-side-card hero-amazon-card">
-                        <div class="amazon-icon">🔇</div>
+                        <img src="/images/amazon-casque.png" alt="" class="hero-amazon-img">
                         <div>
                             <span class="amazon-label">Recommandation</span>
                             <h3>Vous ne supportez plus le monde qui vous entoure ?</h3>
@@ -1514,16 +1518,18 @@
 
         // Amazon affiliate cards data
         const amazonCards = [
-            { question: "Vous ne supportez plus le monde qui vous entoure ?", asin: "B09Y2MYL5C", icon: "🔇" },
-            { question: "Envie de disparaître sans laisser de traces ?", asin: "B0D798Q29V", icon: "🎒" },
-            { question: "Besoin de comprendre pourquoi tout s'effondre ?", asin: "2021223310", icon: "📚" },
-            { question: "Envie de comprendre comment on en est arrivé là ?", asin: "2226257012", icon: "🧠" }
+            { question: "Vous ne supportez plus le monde qui vous entoure ?", asin: "B09Y2MYL5C", image: "/images/amazon-casque.png" },
+            { question: "Envie de disparaître sans laisser de traces ?", asin: "B0D798Q29V", image: "/images/amazon-survie.png" },
+            { question: "Besoin de comprendre pourquoi tout s'effondre ?", asin: "2021223310", image: "/images/amazon-effondrement.png" },
+            { question: "Envie de comprendre comment on en est arrivé là ?", asin: "2226257012", image: "/images/amazon-sapiens.png" }
         ];
 
         function getAmazonCardHTML(card) {
             return `
                 <a href="https://www.amazon.fr/dp/${card.asin}?tag=d3rf21-21" target="_blank" rel="nofollow noopener" class="amazon-card-inline">
-                    <div class="amazon-icon">${card.icon}</div>
+                    <div class="amazon-card-image">
+                        <img src="${card.image}" alt="">
+                    </div>
                     <div class="amazon-content">
                         <span class="amazon-label">Suggestion</span>
                         <h3>${card.question}</h3>
