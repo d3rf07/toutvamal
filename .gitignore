@@ -16,10 +16,25 @@ Thumbs.db
 
 # Logs
 *.log
+logs/
 
 # Temp files
 *.tmp
 temp_*
 
-# Secrets (API keys should not be committed)
-# Note: workflow-n8n.json contains sanitized config only
+# Data (SQLite database)
+data/
+*.db
+
+# Generated files
+articles/*.html
+index.html
+sitemap.xml
+robots.txt
+
+# Secrets (API keys - use config.php.example instead)
+config.php
+
+# Cache
+cache/
+rate_limits.json

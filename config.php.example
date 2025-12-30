@@ -1,0 +1,120 @@
+<?php
+/**
+ * ToutVaMal.fr - Configuration Centrale
+ * Copier ce fichier vers config.php et remplir les valeurs
+ */
+
+// Mode debug (désactiver en production)
+define('DEBUG', false);
+
+// Chemins
+define('ROOT_PATH', __DIR__);
+define('DATA_PATH', ROOT_PATH . '/data');
+define('ARTICLES_PATH', ROOT_PATH . '/articles');
+define('IMAGES_PATH', ROOT_PATH . '/images');
+define('LOGS_PATH', ROOT_PATH . '/logs');
+
+// Base de données SQLite
+define('DB_PATH', DATA_PATH . '/toutvamal.db');
+
+// URLs
+define('SITE_URL', 'https://toutvamal.fr');
+define('SITE_NAME', 'ToutVaMal.fr');
+define('TAGLINE', "C'ÉTAIT MIEUX AVANT");
+
+// APIs - REMPLACER PAR VOS CLÉS
+define('OPENROUTER_API_KEY', 'sk-or-v1-VOTRE-CLE-OPENROUTER');
+define('OPENROUTER_MODEL', 'openai/gpt-5.2');
+define('REPLICATE_API_KEY', 'r8_VOTRE-CLE-REPLICATE');
+define('REPLICATE_MODEL', 'google/gemini-3-pro-image');
+
+// API Token interne - GÉNÉRER UN NOUVEAU TOKEN
+define('API_TOKEN', 'VOTRE-TOKEN-ADMIN-64-CARACTERES');
+
+// Catégories
+define('CATEGORIES', [
+    'chaos-politique' => 'Chaos Politique',
+    'effondrement-economique' => 'Effondrement Économique',
+    'declin-societal' => 'Déclin Sociétal',
+    'desastre-ecologique' => 'Désastre Écologique',
+    'fiasco-technologique' => 'Fiasco Technologique',
+    'crise-sanitaire' => 'Crise Sanitaire'
+]);
+
+// Flux RSS sources (configurables aussi via admin)
+define('RSS_FEEDS', [
+    'https://www.lemonde.fr/rss/une.xml',
+    'https://www.lefigaro.fr/rss/figaro_actualites.xml',
+    'https://www.liberation.fr/arc/outboundfeeds/rss-all/collection/accueil-une/'
+]);
+
+// Génération automatique
+define('CRON_INTERVAL_HOURS', 3);
+
+// Fonctions helper
+function db(): PDO {
+    static $pdo = null;
+    if ($pdo === null) {
+        $pdo = new PDO('sqlite:' . DB_PATH);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    }
+    return $pdo;
+}
+
+function log_error(string $message): void {
+    $logFile = LOGS_PATH . '/error.log';
+    $timestamp = date('Y-m-d H:i:s');
+    file_put_contents($logFile, "[$timestamp] $message\n", FILE_APPEND);
+}
+
+function log_info(string $message): void {
+    $logFile = LOGS_PATH . '/app.log';
+    $timestamp = date('Y-m-d H:i:s');
+    file_put_contents($logFile, "[$timestamp] $message\n", FILE_APPEND);
+}
+
+function json_response(array $data, int $status = 200): void {
+    http_response_code($status);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function require_api_token(): void {
+    $headers = getallheaders();
+    $auth = $headers['Authorization'] ?? '';
+    if (preg_match('/Bearer\s+(.+)/', $auth, $matches)) {
+        if ($matches[1] === API_TOKEN) return;
+    }
+    json_response(['error' => 'Invalid or missing API token'], 401);
+}
+
+function slugify(string $text): string {
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    return strtolower($text);
+}
+
+function format_date(?string $date): string {
+    $timestamp = empty($date) ? time() : strtotime($date);
+    $months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+               'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    return date('j', $timestamp) . ' ' . $months[(int)date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
+}
+
+function format_date_full(int $timestamp = null): string {
+    $timestamp = $timestamp ?? time();
+    $days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    $months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+               'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    return ucfirst($days[(int)date('w', $timestamp)]) . ' ' . date('j', $timestamp) . ' ' . 
+           $months[(int)date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
+}
+
+function reading_time(string $content): int {
+    return max(1, ceil(str_word_count(strip_tags($content)) / 200));
+}
