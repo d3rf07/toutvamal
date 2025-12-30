@@ -20,7 +20,7 @@ define('DB_PATH', DATA_PATH . '/toutvamal.db');
 // URLs
 define('SITE_URL', 'https://toutvamal.fr');
 define('SITE_NAME', 'ToutVaMal.fr');
-define('TAGLINE', "C'ÉTAIT MIEUX AVANT, mais ce sera pire demain");
+define('TAGLINE', "C'ÉTAIT MIEUX AVANT, MAIS CE SERA PIRE DEMAIN");
 
 // APIs - REMPLACER PAR VOS CLÉS
 define('OPENROUTER_API_KEY', 'sk-or-v1-VOTRE-CLE-OPENROUTER');
