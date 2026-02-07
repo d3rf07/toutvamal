@@ -372,10 +372,39 @@ class AdminApp {
         }
     }
 
-    showArticleModal(article = null) {
+    showArticleModal(article = null, imageData = null) {
         const title = article ? 'Modifier article' : 'Nouvel article';
+        const hasImage = article?.image_path;
+        const activeImage = imageData?.images?.find(img => img.is_active) || null;
+
         const body = `
             <form id="article-form">
+                ${hasImage ? `
+                <!-- Image Section -->
+                <div class="form-section image-section">
+                    <h4>🖼️ Image de l'article</h4>
+                    <div class="image-editor">
+                        <div class="image-preview">
+                            <img src="${article.image_path}" alt="Image article" id="article-img-preview">
+                        </div>
+                        <div class="image-controls">
+                            <div class="form-group">
+                                <label>Prompt actuel</label>
+                                <textarea id="current-prompt" rows="3" class="code-textarea" readonly>${activeImage?.prompt || 'Prompt non disponible'}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Nouveau prompt (optionnel)</label>
+                                <textarea id="new-image-prompt" rows="2" placeholder="Laissez vide pour utiliser le prompt par défaut"></textarea>
+                            </div>
+                            <div class="image-actions">
+                                <button type="button" class="btn btn-secondary" onclick="app.regenerateArticleImage(${article.id})">🔄 Régénérer l'image</button>
+                                ${imageData?.count > 1 ? `<button type="button" class="btn btn-outline" onclick="app.showImageVersions(${article.id})">📚 Versions (${imageData.count})</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+
                 <div class="form-group">
                     <label>Titre</label>
                     <input type="text" name="title" value="${article?.title || ''}" required>
@@ -426,7 +455,7 @@ class AdminApp {
             </form>
         `;
 
-        this.showModal(title, body);
+        this.showModal(title, body, 'modal-large');
 
         document.getElementById('article-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -436,10 +465,75 @@ class AdminApp {
 
     async editArticle(id) {
         try {
-            const article = await this.api.getArticle(id);
-            this.showArticleModal(article);
+            const [article, imageData] = await Promise.all([
+                this.api.getArticle(id),
+                this.api.getArticleImages(id).catch(() => ({ images: [], count: 0 }))
+            ]);
+            this.showArticleModal(article, imageData);
         } catch (error) {
             this.toast('Erreur chargement article', 'error');
+        }
+    }
+
+    async regenerateArticleImage(articleId) {
+        const newPrompt = document.getElementById('new-image-prompt')?.value || null;
+
+        if (!confirm('Régénérer l\'image ? Cela peut prendre quelques secondes.')) return;
+
+        try {
+            this.toast('Génération en cours...', 'info');
+            const result = await this.api.regenerateImage(articleId, newPrompt);
+
+            // Update preview
+            const preview = document.getElementById('article-img-preview');
+            if (preview && result.image_path) {
+                preview.src = result.image_path + '?v=' + Date.now();
+            }
+
+            // Update prompt display
+            const promptDisplay = document.getElementById('current-prompt');
+            if (promptDisplay && newPrompt) {
+                promptDisplay.value = newPrompt;
+            }
+
+            this.toast('Image régénérée!', 'success');
+        } catch (error) {
+            this.toast('Erreur: ' + error.message, 'error');
+        }
+    }
+
+    async showImageVersions(articleId) {
+        try {
+            const data = await this.api.getArticleImages(articleId);
+
+            const versionsHtml = data.images.map(img => `
+                <div class="image-version ${img.is_active ? 'active' : ''}">
+                    <img src="${img.image_path}" alt="Version ${img.id}">
+                    <div class="version-info">
+                        <small>${UIHelpers.formatDate(img.created_at)}</small>
+                        <small class="model">${img.model_used || 'Unknown'}</small>
+                        ${img.is_active ? '<span class="badge badge-success">Active</span>' :
+                            `<button class="btn btn-small" onclick="app.activateImageVersion(${img.id}, ${articleId})">Activer</button>`}
+                    </div>
+                </div>
+            `).join('');
+
+            this.showModal('Versions d\'image', `
+                <div class="image-versions-grid">${versionsHtml}</div>
+            `);
+        } catch (error) {
+            this.toast('Erreur chargement versions', 'error');
+        }
+    }
+
+    async activateImageVersion(imageId, articleId) {
+        try {
+            await this.api.activateImage(imageId);
+            this.toast('Version activée', 'success');
+            this.closeModal();
+            this.editArticle(articleId); // Refresh the article modal
+        } catch (error) {
+            this.toast('Erreur activation', 'error');
         }
     }
 
@@ -1080,14 +1174,18 @@ class AdminApp {
         if (currentValue) select.value = currentValue;
     }
 
-    showModal(title, body) {
+    showModal(title, body, modalClass = '') {
+        const modal = document.getElementById('modal');
         document.getElementById('modal-title').textContent = title;
         document.getElementById('modal-body').innerHTML = body;
-        document.getElementById('modal').classList.remove('hidden');
+        modal.classList.remove('hidden', 'modal-large');
+        if (modalClass) modal.classList.add(modalClass);
     }
 
     closeModal() {
-        document.getElementById('modal').classList.add('hidden');
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('modal-large');
     }
 
     switchTab(tabId, tabButton) {

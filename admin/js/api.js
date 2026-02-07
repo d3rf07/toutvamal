@@ -152,22 +152,60 @@ class ToutVaMalAPI {
         return this.post(`/generate.php?retry=${logId}`);
     }
 
+    // ========== NEWS (NEW) ==========
+
+    async getAvailableNews() {
+        return this.get('/news.php?action=available');
+    }
+
+    async fetchNewsFromRss() {
+        return this.post('/news.php?action=fetch');
+    }
+
+    // ========== MODELS (NEW) ==========
+
+    async getModels(type = 'all') {
+        return this.get(`/models.php?type=${type}`);
+    }
+
+    // ========== IMAGES (NEW) ==========
+
+    async getArticleImages(articleId) {
+        return this.get(`/images.php?action=list&article_id=${articleId}`);
+    }
+
+    async regenerateImage(articleId, prompt = null, model = null) {
+        return this.post('/images.php?action=regenerate', {
+            article_id: articleId,
+            prompt: prompt,
+            model: model
+        });
+    }
+
+    async activateImage(imageId) {
+        return this.post('/images.php?action=activate', { image_id: imageId });
+    }
+
+    async deleteImage(imageId) {
+        return this.post('/images.php?action=delete', { image_id: imageId });
+    }
+
     // ========== CONFIG ==========
 
     async getConfig() {
-        return this.get('/config.php');
+        return this.get('/settings.php');
     }
 
     async updateConfig(data) {
-        return this.put('/config.php', data);
+        return this.put('/settings.php', data);
     }
 
     async getPrompts() {
-        return this.get('/config.php?type=prompts');
+        return this.get('/settings.php?type=prompts');
     }
 
     async updatePrompts(data) {
-        return this.put('/config.php?type=prompts', data);
+        return this.put('/settings.php?type=prompts', data);
     }
 
     // ========== RSS SOURCES ==========
