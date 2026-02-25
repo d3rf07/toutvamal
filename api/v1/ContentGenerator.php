@@ -199,7 +199,13 @@ On veut de l'INSOLITE transformé en drame absurde, PAS un vrai drame transform�
 
 4. EXTRAIT : 1 phrase drôle et autonome qui donne envie de lire.
 
-5. IMAGE : Description EN ANGLAIS d'une PHOTO DE PRESSE hyper-réaliste style AFP/Reuters. Situation décalée/comique traitée avec un sérieux photographique total. L'humour vient du CONTRASTE. PAS de cartoon, PAS de dessin, PAS de texte dans l'image.
+5. IMAGE : Description EN ANGLAIS d'une scène BANALE mais traitée comme une photo de presse dramatique.
+   RÈGLES STRICTES pour l'image :
+   - PAS de texte, PAS de mots, PAS de lettres, PAS de pancartes lisibles
+   - PAS de célébrités, PAS de personnalités connues, PAS de visages reconnaissables — uniquement des anonymes
+   - Si l'article parle d'une personnalité, l'image montre la SITUATION ou la RÉACTION des gens, jamais la célébrité
+   - Style : photo de presse candide, naturelle, comme prise sur le vif par un reporter
+   - PAS de cartoon, PAS de dessin, PAS d'illustration
 
 FORMAT JSON strict :
 {
@@ -207,7 +213,7 @@ FORMAT JSON strict :
     "category": "slug-de-categorie",
     "excerpt": "Phrase d'accroche drôle",
     "content": "<p>Paragraphe dramatique sur un truc anodin...</p><p>Escalade absurde...</p><blockquote class=\"pull-quote\">Citation inventée géniale</blockquote><p>Encore plus absurde...</p><p>Chute comique.</p>",
-    "image_prompt": "Photojournalism, Reuters/AFP press photo, [scène réaliste mais décalée], natural lighting, candid shot, DSLR quality, editorial news photography, no illustration, no cartoon, hyperrealistic"
+    "image_prompt": "Candid press photography of [anonymous people in absurd everyday situation], natural lighting, DSLR quality, no text, no words, no celebrities, no famous faces, no illustration"
 }
 PROMPT;
     }

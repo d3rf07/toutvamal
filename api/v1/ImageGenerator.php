@@ -10,7 +10,7 @@ class ImageGenerator {
 
     public function __construct() {
         $this->apiKey = REPLICATE_API_KEY;
-        $this->model = defined('REPLICATE_MODEL') ? REPLICATE_MODEL : 'black-forest-labs/flux-1.1-pro';
+        $this->model = defined('REPLICATE_MODEL') ? REPLICATE_MODEL : 'black-forest-labs/flux-2-pro';
     }
 
     /**
@@ -18,7 +18,7 @@ class ImageGenerator {
      */
     public function generateImage(string $prompt, string $articleSlug): ?string {
         // Style: photojournalisme AFP/Reuters — hyper-réaliste, sérieux, contraste avec le sujet absurde
-        $enhancedPrompt = "Award-winning press photography, Reuters/AFP style, DSLR Canon EOS R5, natural lighting, candid photojournalism, hyperrealistic, no illustration, no cartoon, no AI artifacts: " . $prompt;
+        $enhancedPrompt = "Award-winning press photography, Reuters/AFP style, DSLR Canon EOS R5, natural lighting, candid photojournalism, hyperrealistic, anonymous people only, no recognizable celebrities, no famous faces, no text, no words, no letters, no watermark, no caption, no illustration, no cartoon, no AI artifacts, no deformed faces, no extra fingers: " . $prompt;
 
         // Start prediction
         $prediction = $this->startPrediction($enhancedPrompt);
@@ -45,9 +45,9 @@ class ImageGenerator {
         $payload = [
             'input' => [
                 'prompt' => $prompt,
-                'width' => 1280,
-                'height' => 720,
-                'output_format' => 'webp'
+                'aspect_ratio' => '16:9',
+                'output_format' => 'webp',
+                'output_quality' => 90
             ]
         ];
 
