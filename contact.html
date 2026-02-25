@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Primaire -->
+    <title>Contact - ToutVaMal.fr</title>
+    <meta name="description" content="Contactez la r&eacute;daction de ToutVaMal.fr. Nous lisons tous vos messages (et soupirons &agrave; chaque fois).">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="ToutVaMal.fr">
+    <meta name="language" content="fr">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://toutvamal.fr/contact.html">
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ToutVaMal.fr">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Contact - ToutVaMal.fr">
+    <meta property="og:description" content="Contactez la r&eacute;daction de ToutVaMal.fr. Nous lisons tous vos messages (et soupirons &agrave; chaque fois).">
+    <meta property="og:image" content="https://toutvamal.fr/images/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://toutvamal.fr/contact.html">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@toutvamal">
+    <meta name="twitter:title" content="Contact - ToutVaMal.fr">
+    <meta name="twitter:description" content="Contactez la r&eacute;daction de ToutVaMal.fr. Nous lisons tous vos messages (et soupirons &agrave; chaque fois).">
+    <meta name="twitter:image" content="https://toutvamal.fr/images/og-default.jpg">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#DC2626">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="ToutVaMal.fr RSS" href="https://toutvamal.fr/rss.xml">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": "https://toutvamal.fr/contact.html",
+    "name": "Contact - ToutVaMal.fr",
+    "url": "https://toutvamal.fr/contact.html",
+    "description": "Contactez la r\u00e9daction de ToutVaMal.fr",
+    "publisher": {
+        "@id": "https://toutvamal.fr/#organization"
+    },
+    "inLanguage": "fr-FR"
+}</script>
+    <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://toutvamal.fr"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contact",
+            "item": "https://toutvamal.fr/contact.html"
+        }
+    ]
+}</script>
+
+    <style>
+        .page-header {
+            background: var(--noir);
+            color: var(--blanc);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--gris-300);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .contact-form-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-form-section .subtitle {
+            color: var(--gris-500);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gris-700);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gris-300);
+            border-radius: 0.25rem;
+            font-size: 0.95rem;
+            font-family: var(--font-body);
+            transition: border-color 0.2s;
+            background: var(--blanc);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--rouge);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+        .form-group textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+        .form-submit {
+            padding: 0.85rem 2rem;
+            background: var(--rouge);
+            color: var(--blanc);
+            border: none;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+        .form-submit:hover {
+            background: var(--rouge-sombre);
+        }
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--gris-500);
+            font-style: italic;
+        }
+        .contact-info-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info-section .subtitle {
+            color: var(--gris-500);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .contact-card {
+            background: var(--gris-100);
+            border-radius: 0.5rem;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+        }
+        .contact-card p {
+            font-size: 0.95rem;
+            color: var(--gris-700);
+            line-height: 1.7;
+        }
+        .contact-card a {
+            color: var(--rouge);
+            font-weight: 600;
+        }
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+        .contact-disclaimer {
+            background: var(--gris-100);
+            border-left: 4px solid var(--rouge);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .contact-disclaimer p {
+            font-size: 0.875rem;
+            color: var(--gris-700);
+            line-height: 1.7;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--noir);
+            color: var(--blanc);
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .social-links a:hover {
+            background: var(--gris-700);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-date"></div>
+            <div class="header-logo">
+                <a href="/" class="logo" title="ToutVaMal.fr - Accueil">TOUT<span>VA</span>MAL</a>
+                <div class="tagline">C'&Eacute;TAIT MIEUX AVANT, MAIS CE SERA PIRE DEMAIN</div>
+            </div>
+            <div class="header-newsletter"><a href="/#newsletter">S'abonner</a></div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav" aria-label="Navigation principale">
+        <div class="nav-inner">
+            <ul class="nav-list">
+                <li><a href="/" class="nav-item">Accueil</a></li>
+                <li><a href="/equipe.html" class="nav-item">L'&Eacute;quipe</a></li>
+                <li><a href="/a-propos.html" class="nav-item">&Agrave; Propos</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <nav class="breadcrumbs" aria-label="Fil d'Ariane"><ol itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://toutvamal.fr"><span itemprop="name">Accueil</span></a><span class="breadcrumb-separator" aria-hidden="true">/</span><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">Contact</span><meta itemprop="position" content="2"></li></ol></nav>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Nous contacter</h1>
+        <p>Si vous pensez que &ccedil;a changera quelque chose</p>
+    </section>
+
+    <main>
+        <div class="contact-layout">
+            <!-- Formulaire -->
+            <div class="contact-form-section">
+                <h2>&Eacute;crivez-nous</h2>
+                <p class="subtitle">Nous lisons chaque message. Enfin, quand le moral le permet.</p>
+
+                <form class="contact-form" action="/api/v2/contact.php" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" placeholder="Votre nom (ou pseudonyme de d&eacute;sespoir)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Adresse e-mail</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.fr" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <select id="subject" name="subject" required>
+                            <option value="" disabled selected>Choisissez un sujet</option>
+                            <option value="general">Question g&eacute;n&eacute;rale</option>
+                            <option value="correction">Signaler une erreur (dans nos fausses infos, oui)</option>
+                            <option value="partenariat">Proposition de partenariat</option>
+                            <option value="presse">Demande presse</option>
+                            <option value="technique">Probl&egrave;me technique</option>
+                            <option value="droit-reponse">Droit de r&eacute;ponse</option>
+                            <option value="autre">Autre r&eacute;crimination</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Votre message</label>
+                        <textarea id="message" name="message" placeholder="Exprimez votre d&eacute;sarroi ici..." required></textarea>
+                    </div>
+
+                    <p class="form-note">En soumettant ce formulaire, vous acceptez que vos donn&eacute;es soient trait&eacute;es conform&eacute;ment &agrave; notre <a href="/confidentialite.html">politique de confidentialit&eacute;</a>. Nous ne vendons pas vos donn&eacute;es. On n'est pas si d&eacute;sesp&eacute;r&eacute;s.</p>
+
+                    <button type="submit" class="form-submit">Envoyer le message</button>
+                </form>
+            </div>
+
+            <!-- Infos de contact -->
+            <div class="contact-info-section">
+                <h2>Autres moyens de nous joindre</h2>
+                <p class="subtitle">Pour ceux qui pr&eacute;f&egrave;rent les m&eacute;thodes traditionnelles du d&eacute;sespoir.</p>
+
+                <div class="contact-card">
+                    <h3>Par e-mail</h3>
+                    <p>Pour toute question, r&eacute;clamation ou d&eacute;claration d'amour :</p>
+                    <p><a href="mailto:contact@toutvamal.fr">contact@toutvamal.fr</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Sur les r&eacute;seaux sociaux</h3>
+                    <p>Rejoignez-nous pour une dose quotidienne de pessimisme :</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/toutvamal" target="_blank" rel="noopener">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X (Twitter)
+                        </a>
+                        <a href="https://facebook.com/toutvamal" target="_blank" rel="noopener">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            Facebook
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h3>D&eacute;lai de r&eacute;ponse</h3>
+                    <p>Nous nous effor&ccedil;ons de r&eacute;pondre sous 48 heures. Si ce d&eacute;lai n'est pas respect&eacute;, c'est probablement que votre message nous a plong&eacute;s dans une r&eacute;flexion existentielle.</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Droit de r&eacute;ponse</h3>
+                    <p>Conform&eacute;ment &agrave; la loi du 29 juillet 1881 sur la libert&eacute; de la presse, toute personne nomm&eacute;e ou d&eacute;sign&eacute;e dans un article dispose d'un droit de r&eacute;ponse. Contactez-nous &agrave; <a href="mailto:contact@toutvamal.fr">contact@toutvamal.fr</a> avec la mention &laquo;&nbsp;Droit de r&eacute;ponse&nbsp;&raquo; en objet.</p>
+                </div>
+
+                <div class="contact-disclaimer">
+                    <p><strong>Rappel important :</strong> ToutVaMal.fr est un site satirique. Nos articles sont des parodies de l'actualit&eacute;. Si vous souhaitez porter r&eacute;clamation concernant un contenu, nous vous invitons &agrave; le faire avec le m&ecirc;me sens de l'humour que celui avec lequel il a &eacute;t&eacute; r&eacute;dig&eacute;.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">TOUT<span>VA</span>MAL</div>
+                <div class="tagline">C'&Eacute;TAIT MIEUX AVANT, MAIS CE SERA PIRE DEMAIN</div>
+                <div class="footer-social">
+                    <a href="https://twitter.com/toutvamal" target="_blank" rel="noopener" aria-label="Twitter">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://facebook.com/toutvamal" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h5>Navigation</h5>
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/equipe.html">L'&Eacute;quipe</a></li>
+                    <li><a href="/a-propos.html">&Agrave; Propos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h5>Rubriques</h5>
+                <ul>
+                    <li><a href="/?cat=chaos-politique">Chaos Politique</a></li>
+                    <li><a href="/?cat=effondrement-economique">Effondrement &Eacute;conomique</a></li>
+                    <li><a href="/?cat=declin-societal">D&eacute;clin Soci&eacute;tal</a></li>
+                    <li><a href="/?cat=desastre-ecologique">D&eacute;sastre &Eacute;cologique</a></li>
+                    <li><a href="/?cat=fiasco-technologique">Fiasco Technologique</a></li>
+                    <li><a href="/?cat=crise-sanitaire">Crise Sanitaire</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h5>L&eacute;gal</h5>
+                <ul>
+                    <li><a href="/mentions-legales.html">Mentions l&eacute;gales</a></li>
+                    <li><a href="/cgu.html">CGU</a></li>
+                    <li><a href="/confidentialite.html">Confidentialit&eacute;</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ToutVaMal.fr - Site satirique. Toute ressemblance avec la r&eacute;alit&eacute; serait purement fortuite (ou pas).</p>
+        </div>
+    </footer>
+</body>
+</html>

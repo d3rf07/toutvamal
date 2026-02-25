@@ -555,10 +555,127 @@ class AdminApp {
 
     // ========== GENERATE ==========
 
+    currentGeneratedArticle = null;
+    availableNews = [];
+
     async loadGenerateForm() {
         await this.loadJournalistsList();
         this.populateJournalistSelect('generate-journalist');
         this.populateCategorySelect('generate-category');
+        this.fetchAvailableNews();
+    }
+
+    async fetchAvailableNews() {
+        try {
+            const data = await this.api.getAvailableNews();
+            this.availableNews = data.items || [];
+            this.renderNewsPicker(this.availableNews);
+        } catch (error) {
+            // Fallback: le picker reste vide, on peut utiliser le formulaire
+            console.warn('News fetch failed:', error.message);
+        }
+    }
+
+    renderNewsPicker(items) {
+        const container = document.getElementById('news-picker');
+        if (!container) return;
+
+        if (items.length === 0) {
+            container.innerHTML = '<p class="empty-state">Aucune actualité disponible. Utilisez le formulaire ci-dessous.</p>';
+            return;
+        }
+
+        container.innerHTML = items.map((item, i) => `
+            <div class="news-item ${i === 0 ? 'selected' : ''}" data-url="${UIHelpers.escapeHtml(item.link)}" data-title="${UIHelpers.escapeHtml(item.title)}" onclick="app.selectNews(this)">
+                <div style="font-weight: 500;">${UIHelpers.truncate(item.title, 60)}</div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary);">${item.source || ''} · ${item.pubDate || ''}</div>
+            </div>
+        `).join('');
+    }
+
+    selectNews(el) {
+        document.querySelectorAll('.news-item').forEach(n => n.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    async autoGenerate() {
+        const resultDiv = document.getElementById('generate-result');
+        resultDiv.classList.remove('hidden', 'success', 'error');
+        resultDiv.innerHTML = '<div class="loader"><div class="spinner"></div></div><p>Génération automatique en cours...</p>';
+
+        try {
+            const result = await this.api.generateArticle({
+                auto_publish: true,
+                generate_image: true
+            });
+            this.currentGeneratedArticle = result.article;
+            resultDiv.classList.add('success');
+            this.renderGenerationResult(result);
+        } catch (error) {
+            resultDiv.classList.add('error');
+            resultDiv.innerHTML = `<h4>&#10007; Erreur</h4><p>${error.message}</p>`;
+        }
+    }
+
+    async generateFromSelection() {
+        const selected = document.querySelector('.news-item.selected');
+        const resultDiv = document.getElementById('generate-result');
+
+        const data = {
+            source_url: selected?.dataset.url || document.querySelector('[name="source_url"]')?.value || '',
+            source_title: selected?.dataset.title || '',
+            journalist_id: document.getElementById('generate-journalist')?.value || '',
+            category: document.getElementById('generate-category')?.value || '',
+            auto_publish: !!document.querySelector('[name="auto_publish"]')?.checked,
+            generate_image: !!document.querySelector('[name="generate_image"]')?.checked
+        };
+
+        resultDiv.classList.remove('hidden', 'success', 'error');
+        resultDiv.innerHTML = '<div class="loader"><div class="spinner"></div></div><p>Génération en cours...</p>';
+
+        try {
+            const result = await this.api.generateArticle(data);
+            this.currentGeneratedArticle = result.article;
+            resultDiv.classList.add('success');
+            this.renderGenerationResult(result);
+        } catch (error) {
+            resultDiv.classList.add('error');
+            resultDiv.innerHTML = `<h4>&#10007; Erreur</h4><p>${error.message}</p>`;
+        }
+    }
+
+    renderGenerationResult(result) {
+        const resultDiv = document.getElementById('generate-result');
+        resultDiv.innerHTML = `
+            <h4>&#10004; Article généré avec succès !</h4>
+            <p><strong>${result.article.title}</strong></p>
+            <p>Journaliste: ${result.generation.journalist} | Temps: ${result.generation.time}s</p>
+            ${result.article.image_path ? `<img src="${result.article.image_path}" style="max-width:300px; margin:0.5rem 0; border-radius:4px;">` : ''}
+            <div style="margin-top: 1rem;">
+                <a href="/articles/${result.article.slug}.html" target="_blank" class="btn btn-secondary">Voir</a>
+                <button class="btn btn-primary" onclick="app.editArticle(${result.article.id})">Modifier</button>
+            </div>
+        `;
+
+        // Show post-generation actions
+        const postActions = document.getElementById('post-generate-actions');
+        if (postActions) postActions.classList.remove('hidden');
+    }
+
+    async regenerateImage() {
+        if (!this.currentGeneratedArticle) {
+            this.toast('Aucun article en cours', 'warning');
+            return;
+        }
+        await this.regenerateArticleImage(this.currentGeneratedArticle.id);
+    }
+
+    async deleteCurrentArticle() {
+        if (!this.currentGeneratedArticle) return;
+        await this.deleteArticle(this.currentGeneratedArticle.id);
+        this.currentGeneratedArticle = null;
+        const resultDiv = document.getElementById('generate-result');
+        if (resultDiv) resultDiv.classList.add('hidden');
     }
 
     async generateArticle() {
@@ -575,16 +692,9 @@ class AdminApp {
 
         try {
             const result = await this.api.generateArticle(data);
+            this.currentGeneratedArticle = result.article;
             resultDiv.classList.add('success');
-            resultDiv.innerHTML = `
-                <h4>&#10004; Article généré avec succès !</h4>
-                <p><strong>${result.article.title}</strong></p>
-                <p>Journaliste: ${result.generation.journalist} | Temps: ${result.generation.time}s</p>
-                <div style="margin-top: 1rem;">
-                    <a href="/articles/${result.article.slug}.html" target="_blank" class="btn btn-secondary">Voir l'article</a>
-                    <button class="btn btn-primary" onclick="app.editArticle(${result.article.id})">Modifier</button>
-                </div>
-            `;
+            this.renderGenerationResult(result);
             form.reset();
         } catch (error) {
             resultDiv.classList.add('error');
