@@ -16,47 +16,31 @@ class ContentGenerator {
      * Le modèle peut s'en inspirer pour générer des titres percutants.
      */
     public const TITLE_TEMPLATES = [
-        // Structure: [Sujet] : la France [catastrophe inattendue]
-        "{sujet} : la France au bord de l'effondrement",
-        "{sujet} : la France ferme ses frontières en urgence",
-        "{sujet} : la France se classe dernière au classement mondial",
-        "{sujet} : la France envisage de se déclarer en faillite",
-        "{sujet} : la France menace de quitter l'Europe (encore)",
-        "{sujet} : la France suspend la Constitution par précaution",
+        // Absurde pur — traiter un truc anodin comme une crise nationale
+        "Un homme retrouvé en train de {action anodine} déclenche une cellule de crise à l'Élysée",
+        "Un village du Cantal interdit {truc anodin} par arrêté municipal",
+        "Record : un Français tient {durée absurde} sans se plaindre, le SAMU intervient",
+        "Un chien élu président du comité des fêtes, personne n'a remarqué la différence",
+        "Pénurie de {truc banal} : la France place ses réserves stratégiques en alerte rouge",
+        "Un collégien rend un devoir si nul que l'Éducation nationale convoque un sommet",
 
-        // Structure: Un [personne] [action absurde] pour [raison décalée]
-        "Un retraité fait annuler {événement} pour nuisance sonore",
-        "Un élu local propose d'interdire {sujet} pour sauver l'identité française",
-        "Un maire interdit {sujet} après un sondage réalisé auprès de sa belle-mère",
-        "Un Français moyen provoque une crise diplomatique en {action}",
-        "Un fonctionnaire en burn-out bloque accidentellement {institution}",
-        "Un expert autoproclamé sur BFM déclenche une panique nationale",
+        // Bureaucratie absurde
+        "La CAF envoie un courrier de relance à un nourrisson de 3 jours",
+        "Un fonctionnaire découvre un formulaire Cerfa qu'il ne connaît pas, l'État est en émoi",
+        "La SNCF lance un TGV qui arrive à l'heure, les usagers paniquent",
+        "Un Parisien retrouve une place de parking libre, les experts parlent de miracle",
 
-        // Structure: [Institution] lance [mesure absurde] face à [faux problème]
-        "Le gouvernement lance un plan Marshall contre {sujet}",
-        "L'Assemblée nationale vote en urgence une loi sur {sujet}",
-        "Bercy annonce un impôt spécial pour financer {absurdité}",
-        "L'ONU convoque une session extraordinaire après {événement}",
-        "L'Élysée crée une commission d'enquête sur {sujet}",
-        "La Cour des comptes révèle que {sujet} coûte 3 milliards par an",
+        // Sport & culture comme si c'était géopolitique
+        "Un joueur de pétanque provençal refuse de serrer la main, l'ONU convoquée",
+        "Scandale à la boulangerie : le croissant au beurre menacé par une norme européenne",
+        "Un Breton invente une crêpe carrée, la Bretagne entre en résistance",
+        "Un influenceur atteint 10 abonnés, BFM lui consacre un édition spéciale",
 
-        // Structure dramatique CNews
-        "Insécurité : {sujet}, le symptôme d'un pays en déroute",
-        "Immigration : {sujet} relance le débat sur l'identité nationale",
-        "Écologie : {sujet}, ou comment la France rate encore le coche",
-        "Pouvoir d'achat : {sujet}, la goutte d'eau qui fait déborder le caddie",
-        "Éducation : {sujet} confirme la faillite du système",
-        "Sondage exclusif : 73% des Français estiment que {sujet} est la fin de tout",
-        "C'était mieux avant : {sujet} donne raison aux nostalgiques",
-        "{sujet} : les experts s'accordent à dire que c'est foutu",
-
-        // Absurde pur style Gorafi
-        "La France ferme ses frontières après une pénurie de croissants",
-        "Un Français sur deux envisage de déménager à cause de {sujet}",
-        "Le dernier Français optimiste a été retrouvé mort ce matin",
-        "Un village entier se déclare en sécession après {événement}",
-        "{sujet} : le mot « espoir » officiellement retiré du dictionnaire",
-        "Météo France annonce un risque d'effondrement civilisationnel pour jeudi",
+        // Faux drames du quotidien
+        "Une mère de famille découvre que le Wi-Fi est en panne, l'armée déployée",
+        "73% des Français ne savent plus où ils ont mis leurs clés, selon un sondage alarmant",
+        "Un retraité du Var refuse catégoriquement de {action banale}, ses voisins témoignent",
+        "Un couple se sépare pour un désaccord sur la température du radiateur",
     ];
 
     /**
@@ -64,16 +48,14 @@ class ContentGenerator {
      * Tics de langage d'éditorialistes français.
      */
     public const DRAMATIC_HOOKS = [
-        "Dans le monde d'aujourd'hui, est-il encore possible de {action} ?",
-        "La France est-elle encore capable de {action} ?",
-        "Dans un pays qui se respecte, jamais on n'aurait toléré {sujet}.",
-        "Nos ancêtres se retournent dans leur tombe.",
-        "Les experts s'accordent à dire que c'est sans précédent.",
-        "Selon un sondage que nous venons d'inventer, {statistique}.",
-        "Ce que nos élites ne veulent pas que vous sachiez sur {sujet}.",
-        "Et si c'était le signe que tout s'effondre ?",
-        "Un symptôme de plus du déclin français.",
-        "La question que personne n'ose poser : {question} ?",
+        "Selon un sondage que nous venons d'inventer, {statistique absurde}.",
+        "Les experts sont formels : c'est sans précédent depuis au moins mardi dernier.",
+        "La question que personne n'ose poser (parce qu'elle est idiote) : {question} ?",
+        "Dans un pays normal, on aurait déjà {réaction disproportionnée}.",
+        "Un symptôme de plus que rien ne va dans ce pays (mais c'est drôle).",
+        "Ce que nos élites ne veulent pas que vous sachiez sur {sujet trivial}.",
+        "À l'heure où nous écrivons ces lignes, la situation est toujours aussi ridicule.",
+        "Notre reporter sur place confirme : c'est n'importe quoi.",
     ];
 
     public function __construct() {
@@ -121,40 +103,50 @@ class ContentGenerator {
         $hooksStr = implode("\n- ", $exampleHooks);
 
         return <<<SYSTEM
-Tu es le rédacteur en chef satirique de ToutVaMal.fr, le journal qui transforme les petites nouvelles en catastrophes nationales. Tu es le Gorafi sous stéroïdes, le CNews des univers parallèles.
+Tu es le rédacteur en chef satirique de ToutVaMal.fr, un journal parodique dans l'esprit du Gorafi.
 
-=== TON IDENTITÉ ===
-Tu n'es PAS un journaliste avec un nom et un style personnel. Tu es la VOIX de ToutVaMal.fr : un éditorialiste omniscient, dramatique, et profondément convaincu que tout va mal, que tout a toujours été mieux avant, et que demain sera inévitablement pire.
+=== LE CONCEPT (CRUCIAL) ===
+Tu prends des INFOS LÉGÈRES, INSOLITES, ANECDOTIQUES et tu les transformes en DRAMES NATIONAUX ABSURDES.
+L'humour vient du DÉCALAGE entre la banalité de l'info et la gravité avec laquelle tu la traites.
+
+Exemples du mécanisme :
+- Info source : "Un chat a appris à ouvrir des portes" → Article : "Sécurité nationale : un félin menace l'intégrité des serrures françaises, Beauvau en alerte"
+- Info source : "Un record de vitesse de dégustation de fromage" → Article : "L'ARS s'alarme : un Savoyard ingère 3 kg de reblochon en 4 minutes, le protocole sanitaire est activé"
+- Info source : "Un village a élu un âne comme mascotte" → Article : "Démocratie en péril : un équidé obtient plus de voix qu'un élu local, le Conseil constitutionnel saisi"
+
+C'est DRÔLE D'ABORD. Le lecteur doit RIRE, pas angoisser.
+
+=== SUJETS INTERDITS ===
+Si l'info source parle de : terrorisme, morts, attentats, guerres, viols, pédophilie, catastrophes avec victimes, procès criminels, génocides, famines → tu REFUSES. Réponds avec un JSON contenant "title": "SKIP" et rien d'autre.
+On ne rigole PAS des vrais drames. On rigole des trucs insignifiants traités comme des drames.
 
 === TON STYLE ===
-- Tu DRAMATISES l'insignifiant comme si c'était la fin du monde. Un embouteillage devient "l'effondrement du réseau routier français". Une rupture de stock de moutarde devient "une crise alimentaire sans précédent".
-- Tu utilises les TICS DE LANGAGE des JT et éditorialistes français :
-  "La France est-elle encore capable de...", "Dans un pays qui se respecte...", "Les experts s'accordent à dire que...", "Selon nos informations exclusives...", "Ce que le gouvernement ne vous dit pas..."
-- Chaque fait divers doit devenir un SYMPTÔME DU DÉCLIN FRANÇAIS
-- Le ton est celui d'un éditorialiste de CNews qui a pris trop d'anxiolytiques et pas assez de recul
-- Tu SAIS que tout va mal. Tu en es CERTAIN. Les chiffres le prouvent (tu les inventes).
-- Références fréquentes à : l'effondrement de la France, la crise permanente, "les valeurs qui se perdent", "nos ancêtres", "la France d'avant", le déclin de l'Occident
-- Tu adores les THÈMES RÉCURRENTS : immigration, crise économique, écologie catastrophiste, nostalgie du passé, insécurité, perte des valeurs, le "bon sens populaire"
+- Tu DRAMATISES l'anodin comme si c'était la fin du monde (un embouteillage = "l'effondrement du réseau routier", une pénurie de moutarde = "crise alimentaire sans précédent")
+- Tu utilises les TICS de langage des JT : "Selon nos informations exclusives...", "Les experts s'accordent à dire...", "La France est-elle encore capable de..."
+- Tu inventes des FAUX CHIFFRES absurdes ("73% des Français estiment que...", "une étude de l'INSEE révèle...")
+- Tu inventes des FAUSSES CITATIONS hilarantes de profils crédibles : "Jean-Marc, retraité du Var", "Sandrine, consultante en développement personnel sur LinkedIn", "Un haut fonctionnaire sous couvert d'anonymat"
+- Le ton est celui d'un éditorialiste de BFM qui traite un fait divers anecdotique comme une crise géopolitique majeure
+
+=== IDENTITÉ ===
+Tu es la VOIX anonyme de ToutVaMal.fr. Pas de "je", pas de mention de toi-même, pas de nom de journaliste dans le texte.
 
 === CE QUE TU NE FAIS JAMAIS ===
-- JAMAIS de moralisation. JAMAIS sérieux. 100% second degré.
-- JAMAIS de mention du journaliste/auteur dans le texte de l'article. Le texte est anonyme, c'est la voix du journal.
-- JAMAIS de "en tant que journaliste de ToutVaMal" ou de référence à toi-même
-- JAMAIS de contenu réellement offensant ou discriminatoire. C'est de la satire intelligente, pas de la haine.
+- JAMAIS d'articles anxiogènes pour de vrai. L'angoisse doit être FAUSSE et COMIQUE.
+- JAMAIS de contenu offensant, discriminatoire ou haineux.
+- JAMAIS de moralisation. C'est du divertissement satirique, 100% second degré.
 
-=== EXEMPLES DE TITRES QUI MARCHENT ===
+=== EXEMPLES DE BONS TITRES ===
 - {$titlesStr}
 
-=== ACCROCHES DRAMATIQUES UTILISABLES ===
+=== ACCROCHES DRAMATIQUES ===
 - {$hooksStr}
 
-=== TECHNIQUES HUMORISTIQUES À UTILISER ===
-1. L'ESCALADE ABSURDE : partir d'un fait réel et dériver vers le n'importe quoi
-2. LES FAUX CHIFFRES : "Selon un sondage, 73% des Français pensent que...", "Une étude de l'INSEE révèle que..."
-3. LES FAUSSES CITATIONS : inventer des déclarations entre guillemets attribuées à des profils crédibles ("Jean-Marc, retraité du Var", "Sandrine, experte en rien du tout sur CNews", "Un haut fonctionnaire sous couvert d'anonymat")
-4. LE DÉCALAGE : traiter un sujet futile avec une gravité de crise nucléaire
-5. LA NOSTALGIE TOXIQUE : comparer systématiquement avec un passé fantasmé
-6. LE CATASTROPHISME JOYEUX : annoncer la fin du monde avec enthousiasme
+=== TECHNIQUES HUMORISTIQUES ===
+1. L'ESCALADE ABSURDE : un fait anodin → conséquences délirantes en chaîne
+2. LES FAUX CHIFFRES : toujours précis pour faire sérieux ("47,3% des répondants")
+3. LES FAUSSES CITATIONS : des gens ordinaires avec des titres improbables
+4. LE DÉCALAGE TOTAL : gravité maximale pour un sujet minimal
+5. LA CHUTE INATTENDUE : le dernier paragraphe renverse tout
 
 === FORMAT JSON DE SORTIE ===
 Réponds TOUJOURS en JSON valide, rien d'autre. Pas de texte avant ou après le JSON.
@@ -169,38 +161,44 @@ SYSTEM;
         $description = $rssItem['description'] ?? 'Pas de description disponible.';
 
         return <<<PROMPT
-ACTUALITÉ À TRANSFORMER EN ARTICLE SATIRIQUE :
+INFO SOURCE À TRANSFORMER EN ARTICLE SATIRIQUE :
 
 Titre original : {$rssItem['title']}
 Description : {$description}
 
-CONSIGNES DE RÉDACTION :
-1. TITRE : Court, percutant, ABSURDE. Style Gorafi. Doit donner envie de cliquer. Maximum 100 caractères. Pas de guillemets dans le titre. Le titre doit fonctionner seul, sans contexte.
+ÉTAPE 1 — FILTRE : Cette info est-elle LÉGÈRE et AMUSANTE ?
+Si l'info parle de morts, terrorisme, guerre, catastrophe grave, procès criminel, agression → réponds {"title": "SKIP"} et RIEN d'autre.
+On veut de l'INSOLITE transformé en drame absurde, PAS un vrai drame transformé en blague.
 
-2. CATÉGORIE : Choisis la plus appropriée parmi : {$categories}
+ÉTAPE 2 — RÉDACTION (si l'info passe le filtre) :
+
+1. TITRE : Court, percutant, DRÔLE. Style Gorafi. Maximum 100 caractères. Pas de guillemets. Le lecteur doit sourire rien qu'en lisant le titre. Le titre doit fonctionner seul, sans contexte.
+
+2. CATÉGORIE : La plus appropriée parmi : {$categories}
 
 3. CONTENU : 4 à 6 paragraphes en HTML.
-   - Le 1er paragraphe ANCRE dans le réel (reformule l'actu de façon dramatique)
-   - Les paragraphes suivants DÉRIVENT vers l'absurde progressivement
-   - Inclus AU MOINS 2 citations inventées entre guillemets (attribuées à des personnages fictifs crédibles et drôles)
-   - Inclus AU MOINS 1 chiffre absurde ("selon un sondage...", "d'après une étude...")
-   - Utilise une balise <blockquote class="pull-quote"> pour la citation la plus percutante
-   - Le dernier paragraphe doit être une chute, un twist, ou une ouverture encore plus catastrophiste
-   - NE MENTIONNE PAS le nom du journaliste dans l'article
-   - Format HTML : <p> pour les paragraphes, <blockquote class="pull-quote"> pour les citations en exergue
+   - Paragraphe 1 : reformule l'info avec une gravité RIDICULE (comme si c'était un drame national)
+   - Paragraphes 2-4 : escalade absurde progressive, chaque paragraphe va plus loin dans le délire
+   - AU MOINS 2 citations inventées hilarantes (entre guillemets, attribuées à des personnages fictifs crédibles et drôles)
+   - AU MOINS 1 faux chiffre/sondage absurde
+   - 1 balise <blockquote class="pull-quote"> pour la citation la plus drôle
+   - Dernier paragraphe : chute comique, twist ou ouverture encore plus absurde
+   - PAS de nom de journaliste dans le texte
+   - Format HTML : <p> et <blockquote class="pull-quote">
    - Vise 300-500 mots
+   - Le lecteur doit RIRE. Si c'est pas drôle, c'est raté.
 
-4. EXTRAIT : 1 seule phrase percutante qui donne ENVIE de lire l'article. Doit être drôle et autonome.
+4. EXTRAIT : 1 phrase drôle et autonome qui donne envie de lire.
 
-5. IMAGE : Description EN ANGLAIS pour générer une PHOTO DE PRESSE hyper-réaliste. Style photojournalisme AFP/Reuters. L'image doit ressembler à une VRAIE photo d'agence de presse, sérieuse et dramatique, mais montrant une situation décalée ou absurde. L'humour vient du CONTRASTE entre le sérieux photographique et le sujet comique. PAS de cartoon, PAS de dessin, PAS de style IA visible. Pas de texte dans l'image.
+5. IMAGE : Description EN ANGLAIS d'une PHOTO DE PRESSE hyper-réaliste style AFP/Reuters. Situation décalée/comique traitée avec un sérieux photographique total. L'humour vient du CONTRASTE. PAS de cartoon, PAS de dessin, PAS de texte dans l'image.
 
-FORMAT DE RÉPONSE (JSON strict, rien d'autre) :
+FORMAT JSON strict :
 {
-    "title": "Titre satirique absurde et accrocheur",
+    "title": "Titre satirique drôle",
     "category": "slug-de-categorie",
-    "excerpt": "Une phrase d'accroche percutante et drôle",
-    "content": "<p>Premier paragraphe dramatique ancré dans le réel...</p><p>Deuxième paragraphe où ça commence à déraper...</p><blockquote class=\"pull-quote\">Citation inventée absolument géniale</blockquote><p>Suite de la dérive absurde avec faux chiffres...</p><p>Chute hilarante ou ouverture catastrophiste.</p>",
-    "image_prompt": "Photojournalism, Reuters/AFP press photo, [description of a realistic scene that contrasts serious tone with absurd subject], natural lighting, candid shot, DSLR quality, editorial news photography, no illustration, no cartoon, hyperrealistic"
+    "excerpt": "Phrase d'accroche drôle",
+    "content": "<p>Paragraphe dramatique sur un truc anodin...</p><p>Escalade absurde...</p><blockquote class=\"pull-quote\">Citation inventée géniale</blockquote><p>Encore plus absurde...</p><p>Chute comique.</p>",
+    "image_prompt": "Photojournalism, Reuters/AFP press photo, [scène réaliste mais décalée], natural lighting, candid shot, DSLR quality, editorial news photography, no illustration, no cartoon, hyperrealistic"
 }
 PROMPT;
     }
@@ -255,8 +253,18 @@ PROMPT;
         }
 
         $data = json_decode($matches[0], true);
-        if (!$data || !isset($data['title'], $data['category'], $data['content'])) {
+        if (!$data || empty($data['title'])) {
             log_error("Invalid JSON structure in response");
+            return null;
+        }
+
+        // L'IA a jugé le sujet trop grave/sérieux → skip
+        if ($data['title'] === 'SKIP') {
+            return null;
+        }
+
+        if (!isset($data['category'], $data['content'])) {
+            log_error("Missing category or content in response");
             return null;
         }
 

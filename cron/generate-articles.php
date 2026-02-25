@@ -109,7 +109,10 @@ foreach ($allItems as $item) {
         ], $journalist);
         
         if (!$content || empty($content['title'])) {
-            throw new Exception('Content generation returned empty');
+            echo "  → SKIP: Sujet trop sérieux ou génération vide\n";
+            Database::updateGenerationLog($logId, ['status' => 'skipped', 'error_message' => 'Subject filtered or empty']);
+            $skipped++;
+            continue;
         }
         
         // Générer image
