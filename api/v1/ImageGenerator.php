@@ -6,10 +6,11 @@
 
 class ImageGenerator {
     private string $apiKey;
-    private string $model = 'google/gemini-3-pro-image';
+    private string $model;
 
     public function __construct() {
         $this->apiKey = REPLICATE_API_KEY;
+        $this->model = defined('REPLICATE_MODEL') ? REPLICATE_MODEL : 'black-forest-labs/flux-1.1-pro';
     }
 
     /**
@@ -37,11 +38,11 @@ class ImageGenerator {
     }
 
     private function startPrediction(string $prompt): ?array {
-        $ch = curl_init('https://api.replicate.com/v1/predictions');
+        // Use the models endpoint for official models
+        $url = 'https://api.replicate.com/v1/models/' . $this->model . '/predictions';
+        $ch = curl_init($url);
 
         $payload = [
-            'version' => 'latest',
-            'model' => $this->model,
             'input' => [
                 'prompt' => $prompt,
                 'width' => 1280,
@@ -74,7 +75,7 @@ class ImageGenerator {
         return json_decode($response, true);
     }
 
-    private function waitForResult(string $predictionId): ?string {
+    private function waitForResult(string $predictionId): mixed {
         $maxAttempts = 60;
         $attempt = 0;
 

@@ -78,7 +78,7 @@ try {
 
     // 6. Log success
     $stmt = db()->prepare("
-        INSERT INTO generation_log (source_url, source_title, article_id, status)
+        INSERT INTO generation_logs (source_url, source_title, article_id, status)
         VALUES (:url, :title, :article_id, 'success')
     ");
     $stmt->execute([
@@ -101,7 +101,7 @@ try {
     // Log failure
     if (isset($rssItem)) {
         $stmt = db()->prepare("
-            INSERT INTO generation_log (source_url, source_title, status, error_message)
+            INSERT INTO generation_logs (source_url, source_title, status, error_message)
             VALUES (:url, :title, 'failed', :error)
         ");
         $stmt->execute([
