@@ -38,3 +38,6 @@ config.php
 # Cache
 cache/
 rate_limits.json
+
+# Server config
+.user.ini

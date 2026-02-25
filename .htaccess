@@ -26,6 +26,11 @@
     </IfModule>
 </FilesMatch>
 
+# Block database init and migration scripts
+<FilesMatch "(init_db\.php|migrate\.php)">
+    Require all denied
+</FilesMatch>
+
 # Block PHP info/config files ONLY at root level (not in subdirectories)
 <IfModule mod_rewrite.c>
     RewriteCond %{REQUEST_URI} ^/(phpinfo|info|test)\.php$ [NC]

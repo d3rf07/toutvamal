@@ -2,10 +2,19 @@
 /**
  * ToutVaMal.fr - Database Migration v2
  * Ajoute les nouvelles tables et colonnes pour l'admin complet
+ *
+ * SECURITE: Authentification Bearer requise
  */
 
-require_once dirname(dirname(__DIR__)) . '/config.php';
+require_once __DIR__ . '/auth.php';
 
+// Vérifier l'authentification API avant toute opération
+Auth::requireApiToken();
+
+// Logging de l'accès
+Auth::logAccess('/api/v2/migrate.php', $_SERVER['REQUEST_METHOD'] ?? 'CLI');
+
+header('Content-Type: text/plain; charset=utf-8');
 echo "=== Migration Database v2 ===\n\n";
 
 $db = db();

@@ -1,7 +1,12 @@
 <?php
 /**
  * ToutVaMal.fr - Configuration Centrale
- * Copier ce fichier vers config.php et remplir les valeurs
+ *
+ * INSTRUCTIONS:
+ * 1. Copier ce fichier vers config.php :  cp config.php.example config.php
+ * 2. Remplacer tous les placeholders (VOTRE-*) par vos vraies valeurs
+ * 3. Ne JAMAIS committer config.php (il est dans .gitignore)
+ * 4. Pour le API_TOKEN, generer un token unique :  php -r "echo bin2hex(random_bytes(32));"
  */
 
 // Mode debug (désactiver en production)
