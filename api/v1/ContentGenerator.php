@@ -16,31 +16,19 @@ class ContentGenerator {
      * Le modèle peut s'en inspirer pour générer des titres percutants.
      */
     public const TITLE_TEMPLATES = [
-        // Absurde pur — traiter un truc anodin comme une crise nationale
-        "Un homme retrouvé en train de {action anodine} déclenche une cellule de crise à l'Élysée",
-        "Un village du Cantal interdit {truc anodin} par arrêté municipal",
-        "Record : un Français tient {durée absurde} sans se plaindre, le SAMU intervient",
-        "Un chien élu président du comité des fêtes, personne n'a remarqué la différence",
-        "Pénurie de {truc banal} : la France place ses réserves stratégiques en alerte rouge",
-        "Un collégien rend un devoir si nul que l'Éducation nationale convoque un sommet",
-
-        // Bureaucratie absurde
-        "La CAF envoie un courrier de relance à un nourrisson de 3 jours",
-        "Un fonctionnaire découvre un formulaire Cerfa qu'il ne connaît pas, l'État est en émoi",
-        "La SNCF lance un TGV qui arrive à l'heure, les usagers paniquent",
-        "Un Parisien retrouve une place de parking libre, les experts parlent de miracle",
-
-        // Sport & culture comme si c'était géopolitique
-        "Un joueur de pétanque provençal refuse de serrer la main, l'ONU convoquée",
-        "Scandale à la boulangerie : le croissant au beurre menacé par une norme européenne",
-        "Un Breton invente une crêpe carrée, la Bretagne entre en résistance",
-        "Un influenceur atteint 10 abonnés, BFM lui consacre un édition spéciale",
-
-        // Faux drames du quotidien
-        "Une mère de famille découvre que le Wi-Fi est en panne, l'armée déployée",
-        "73% des Français ne savent plus où ils ont mis leurs clés, selon un sondage alarmant",
-        "Un retraité du Var refuse catégoriquement de {action banale}, ses voisins témoignent",
-        "Un couple se sépare pour un désaccord sur la température du radiateur",
+        // UNE idée, UNE phrase, immédiatement drôle
+        "Un maire interdit la pluie par arrêté municipal",
+        "Un Français retrouvé vivant après 3 heures sans WiFi",
+        "La SNCF lance un train à l'heure, les usagers paniquent",
+        "Un chien élu président du comité des fêtes",
+        "Un Parisien trouve une place de parking, le SAMU intervient",
+        "La CAF envoie un courrier de relance à un bébé de 3 jours",
+        "Un Breton invente la crêpe carrée, la Bretagne entre en résistance",
+        "Un couple divorce pour un désaccord sur le thermostat",
+        "Un influenceur atteint 10 abonnés, BFM lui consacre une édition spéciale",
+        "Un retraité du Var appelle la police car son voisin est heureux",
+        "Un village du Cantal interdit le bonheur après 22h",
+        "Un collégien rend un devoir si nul que l'Éducation nationale démissionne",
     ];
 
     /**
@@ -135,8 +123,19 @@ Tu es la VOIX anonyme de ToutVaMal.fr. Pas de "je", pas de mention de toi-même,
 - JAMAIS de contenu offensant, discriminatoire ou haineux.
 - JAMAIS de moralisation. C'est du divertissement satirique, 100% second degré.
 
-=== EXEMPLES DE BONS TITRES ===
+=== RÈGLE D'OR DES TITRES ===
+UNE idée. UNE phrase. Compréhensible en 2 secondes. Maximum 80 caractères.
+Le titre = [situation banale] + [conséquence absurde]. C'est TOUT.
+INTERDIT : jeux de mots, métaphores, deux idées mélangées, phrases alambiquées.
+
+BONS titres :
 - {$titlesStr}
+
+MAUVAIS titres (à ne JAMAIS faire) :
+- "La France cherche son étiquette avant la guerre civile" (incompréhensible)
+- "Le dossier rangé dans le tiroir Transparence" (jeu de mots obscur)
+- "Sanofi évince son patron et déclenche une alerte pactole" (2 idées + mot inventé)
+- "Glisse olympique : bientôt un permis de descendre une pente en liberté" (phrase tarabiscotée)
 
 === ACCROCHES DRAMATIQUES ===
 - {$hooksStr}
@@ -172,7 +171,17 @@ On veut de l'INSOLITE transformé en drame absurde, PAS un vrai drame transform�
 
 ÉTAPE 2 — RÉDACTION (si l'info passe le filtre) :
 
-1. TITRE : Court, percutant, DRÔLE. Style Gorafi. Maximum 100 caractères. Pas de guillemets. Le lecteur doit sourire rien qu'en lisant le titre. Le titre doit fonctionner seul, sans contexte.
+1. TITRE : UNE SEULE IDÉE, UNE SEULE PHRASE. Maximum 80 caractères.
+   RÈGLES STRICTES :
+   - UNE situation + UNE conséquence absurde. C'est tout. Pas deux idées, pas de sous-entendu compliqué.
+   - Le titre doit être compris en 2 secondes par quelqu'un qui ne connaît pas l'actu.
+   - Structure simple : "[Quelqu'un] [fait un truc anodin], [conséquence disproportionnée]"
+   - Pas de jeux de mots obscurs, pas de métaphores, pas de références culturelles nécessaires.
+   - Pas de guillemets, pas de deux-points sauf pour situer ("Lyon :", "La SNCF :").
+   BON : "Un maire interdit la pluie par arrêté municipal"
+   BON : "Un Français retrouvé vivant après 3 heures sans WiFi"
+   MAUVAIS : "Le dossier Epstein rangé dans le tiroir Transparence" (incompréhensible)
+   MAUVAIS : "La France cherche son étiquette avant la guerre civile" (trop d'idées)
 
 2. CATÉGORIE : La plus appropriée parmi : {$categories}
 
