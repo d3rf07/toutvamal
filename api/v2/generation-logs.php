@@ -40,8 +40,13 @@ class GenerationLogsAPI extends APIEndpoint {
 
         // Total count
         $db = Database::getInstance();
-        $where = $status ? "WHERE status = '$status'" : '';
-        $total = (int)$db->query("SELECT COUNT(*) FROM generation_logs $where")->fetchColumn();
+        if ($status) {
+            $stmt = $db->prepare("SELECT COUNT(*) FROM generation_logs WHERE status = ?");
+            $stmt->execute([$status]);
+            $total = (int)$stmt->fetchColumn();
+        } else {
+            $total = (int)$db->query("SELECT COUNT(*) FROM generation_logs")->fetchColumn();
+        }
 
         $this->success([
             'logs' => $logs,

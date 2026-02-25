@@ -155,7 +155,13 @@ class APIEndpoint {
 
     public function __construct() {
         // Headers CORS
-        header('Access-Control-Allow-Origin: *');
+        $allowedOrigins = [SITE_URL, SITE_URL . ':443', 'https://toutvamal.fr', 'https://www.toutvamal.fr'];
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        if (in_array($origin, $allowedOrigins)) {
+            header('Access-Control-Allow-Origin: ' . $origin);
+        } else {
+            header('Access-Control-Allow-Origin: https://toutvamal.fr');
+        }
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
