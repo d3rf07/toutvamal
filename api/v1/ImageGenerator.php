@@ -16,8 +16,8 @@ class ImageGenerator {
      * Generate image from prompt
      */
     public function generateImage(string $prompt, string $articleSlug): ?string {
-        // Style adjustments for news photography
-        $enhancedPrompt = "Professional photojournalism style, dramatic lighting, realistic, high quality news photograph: " . $prompt;
+        // Style: photojournalisme AFP/Reuters — hyper-réaliste, sérieux, contraste avec le sujet absurde
+        $enhancedPrompt = "Award-winning press photography, Reuters/AFP style, DSLR Canon EOS R5, natural lighting, candid photojournalism, hyperrealistic, no illustration, no cartoon, no AI artifacts: " . $prompt;
 
         // Start prediction
         $prediction = $this->startPrediction($enhancedPrompt);

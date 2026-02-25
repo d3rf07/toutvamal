@@ -12,8 +12,10 @@ $categoryFilter = '';
 $params = [];
 
 if (!empty($currentCategory) && isset(CATEGORIES[$currentCategory])) {
-    $categoryFilter = 'WHERE category = :category';
+    $categoryFilter = "WHERE a.status = 'published' AND category = :category";
     $params[':category'] = $currentCategory;
+} else {
+    $categoryFilter = "WHERE a.status = 'published'";
 }
 
 // Récupérer les articles

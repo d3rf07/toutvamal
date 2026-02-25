@@ -57,8 +57,8 @@ try {
 
     // 5. Save to database
     $stmt = db()->prepare("
-        INSERT INTO articles (slug, title, content, excerpt, category, image_path, journalist_id, source_title, source_url)
-        VALUES (:slug, :title, :content, :excerpt, :category, :image_path, :journalist_id, :source_title, :source_url)
+        INSERT INTO articles (slug, title, content, excerpt, category, image_path, journalist_id, source_title, source_url, status, published_at)
+        VALUES (:slug, :title, :content, :excerpt, :category, :image_path, :journalist_id, :source_title, :source_url, 'published', :published_at)
     ");
 
     $stmt->execute([
@@ -70,7 +70,8 @@ try {
         ':image_path' => $articleData['image_path'] ?? null,
         ':journalist_id' => $articleData['journalist_id'],
         ':source_title' => $articleData['source_title'],
-        ':source_url' => $articleData['source_url']
+        ':source_url' => $articleData['source_url'],
+        ':published_at' => date('Y-m-d H:i:s')
     ]);
 
     $articleId = db()->lastInsertId();

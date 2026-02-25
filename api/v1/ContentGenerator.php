@@ -192,7 +192,7 @@ CONSIGNES DE RÉDACTION :
 
 4. EXTRAIT : 1 seule phrase percutante qui donne ENVIE de lire l'article. Doit être drôle et autonome.
 
-5. IMAGE : Description EN ANGLAIS pour générer une image éditoriale satirique. Style caricature de presse. Pas de texte dans l'image.
+5. IMAGE : Description EN ANGLAIS pour générer une PHOTO DE PRESSE hyper-réaliste. Style photojournalisme AFP/Reuters. L'image doit ressembler à une VRAIE photo d'agence de presse, sérieuse et dramatique, mais montrant une situation décalée ou absurde. L'humour vient du CONTRASTE entre le sérieux photographique et le sujet comique. PAS de cartoon, PAS de dessin, PAS de style IA visible. Pas de texte dans l'image.
 
 FORMAT DE RÉPONSE (JSON strict, rien d'autre) :
 {
@@ -200,7 +200,7 @@ FORMAT DE RÉPONSE (JSON strict, rien d'autre) :
     "category": "slug-de-categorie",
     "excerpt": "Une phrase d'accroche percutante et drôle",
     "content": "<p>Premier paragraphe dramatique ancré dans le réel...</p><p>Deuxième paragraphe où ça commence à déraper...</p><blockquote class=\"pull-quote\">Citation inventée absolument géniale</blockquote><p>Suite de la dérive absurde avec faux chiffres...</p><p>Chute hilarante ou ouverture catastrophiste.</p>",
-    "image_prompt": "Editorial cartoon style, satirical French newspaper illustration, [description of scene], dramatic and absurd mood, professional press caricature quality"
+    "image_prompt": "Photojournalism, Reuters/AFP press photo, [description of a realistic scene that contrasts serious tone with absurd subject], natural lighting, candid shot, DSLR quality, editorial news photography, no illustration, no cartoon, hyperrealistic"
 }
 PROMPT;
     }

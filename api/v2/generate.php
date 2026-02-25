@@ -26,7 +26,7 @@ class GenerateAPI extends APIEndpoint {
             'source_url' => $data['source_url'] ?? null,
             'journalist_id' => $data['journalist_id'] ?? null,
             'category' => $data['category'] ?? null,
-            'auto_publish' => $data['auto_publish'] ?? false,
+            'auto_publish' => $data['auto_publish'] ?? true,
             'generate_image' => $data['generate_image'] ?? true
         ];
 
