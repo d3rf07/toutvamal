@@ -203,16 +203,24 @@ class GenerateAPI extends APIEndpoint {
             try {
                 $items = $fetcher->fetch($source['url']);
                 if (!empty($items)) {
-                    // Vérifier que l'item n'a pas déjà été utilisé
                     $db = Database::getInstance();
                     foreach ($items as $item) {
+                        // Check 1: exact URL match in generation_logs
                         $stmt = $db->prepare("SELECT COUNT(*) FROM generation_logs WHERE source_url = ?");
                         $stmt->execute([$item['link']]);
-                        if ($stmt->fetchColumn() == 0) {
-                            // Item non utilisé
-                            Database::updateRssSource($source['id'], ['last_fetch' => date('Y-m-d H:i:s')]);
-                            return $item;
-                        }
+                        if ($stmt->fetchColumn() > 0) continue;
+
+                        // Check 2: exact URL match in articles
+                        $stmt = $db->prepare("SELECT COUNT(*) FROM articles WHERE source_url = ?");
+                        $stmt->execute([$item['link']]);
+                        if ($stmt->fetchColumn() > 0) continue;
+
+                        // Check 3: similar topic already covered (reuse RSSFetcher method)
+                        if ($fetcher->isSimilarTopicCovered($item['title'])) continue;
+
+                        // Item is new and unique
+                        Database::updateRssSource($source['id'], ['last_fetch' => date('Y-m-d H:i:s')]);
+                        return $item;
                     }
                 }
             } catch (Exception $e) {
