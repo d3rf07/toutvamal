@@ -51,13 +51,53 @@ $pageDescription = $article['excerpt'] ?? substr(strip_tags($article['content'])
 $ogImage = SITE_URL . $article['image_path'];
 $currentCategory = $article['category'];
 
+// Schema NewsArticle JSON-LD
+$articleSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'NewsArticle',
+    'headline' => $article['title'],
+    'description' => $pageDescription,
+    'image' => $ogImage,
+    'datePublished' => date('c', strtotime($article['published_at'])),
+    'dateModified' => date('c', strtotime($article['updated_at'] ?? $article['published_at'])),
+    'author' => [
+        '@type' => 'Person',
+        'name' => $article['journalist_name'] ?? 'La Rédaction',
+        'url' => SITE_URL . '/equipe/' . ($article['journalist_slug'] ?? '') . '.html'
+    ],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => SITE_NAME,
+        'url' => SITE_URL,
+        'logo' => [
+            '@type' => 'ImageObject',
+            'url' => SITE_URL . '/logo-toutvamal.png',
+            'width' => 600,
+            'height' => 60
+        ]
+    ],
+    'mainEntityOfPage' => [
+        '@type' => 'WebPage',
+        '@id' => SITE_URL . '/articles/' . $article['slug'] . '.html'
+    ],
+    'articleSection' => CATEGORIES[$article['category']] ?? $article['category'],
+    'inLanguage' => 'fr-FR',
+    'isAccessibleForFree' => true,
+    'url' => SITE_URL . '/articles/' . $article['slug'] . '.html'
+];
+$articleSchemaJson = json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
 include __DIR__ . '/templates/header.php';
 ?>
+
+<!-- NewsArticle Schema -->
+<script type="application/ld+json"><?= $articleSchemaJson ?></script>
 
 <!-- Article Hero -->
 <section class="article-hero">
     <img src="<?= htmlspecialchars($article['image_path'] ?: '/images/placeholder.jpg') ?>"
-         alt="<?= htmlspecialchars($article['title']) ?>">
+         alt="<?= htmlspecialchars($article['title']) ?>"
+         loading="eager">
     <div class="article-hero-content">
         <span class="badge"><?= htmlspecialchars(CATEGORIES[$article['category']] ?? $article['category']) ?></span>
         <h1><?= htmlspecialchars($article['title']) ?></h1>
@@ -73,7 +113,72 @@ include __DIR__ . '/templates/header.php';
     <div class="content">
         <!-- Article Content -->
         <article class="article-content">
-            <?= $article['content'] ?>
+            <?php
+            // Injecter un bloc affilié Amazon aléatoirement (1 article sur 4-5)
+            $amazonProducts = [
+                [
+                    'url' => 'https://www.amazon.fr/dp/B09Y2MYL5C?tag=d3rf21-21',
+                    'img' => '/images/amazon-casque.webp',
+                    'alt' => 'Casque anti-bruit',
+                    'title' => 'Besoin de vous isoler du chaos ambiant ?',
+                    'quote' => 'Le silence, c\'est le nouveau luxe.',
+                    'label' => 'SUGGESTION'
+                ],
+                [
+                    'url' => 'https://www.amazon.fr/dp/B0D798Q29V?tag=d3rf21-21',
+                    'img' => '/images/amazon-survie.webp',
+                    'alt' => 'Kit de survie',
+                    'title' => 'Prêt pour quand LinkedIn ne suffira plus ?',
+                    'quote' => 'Plan B : la vraie compétence de demain.',
+                    'label' => 'SUGGESTION'
+                ],
+                [
+                    'url' => 'https://www.amazon.fr/dp/2021223310?tag=d3rf21-21',
+                    'img' => '/images/amazon-effondrement.webp',
+                    'alt' => 'Comment tout peut s\'effondrer',
+                    'title' => 'Envie de comprendre pourquoi tout s\'effondre ?',
+                    'quote' => 'Spoiler : c\'est pas que de votre faute.',
+                    'label' => 'LECTURE'
+                ],
+                [
+                    'url' => 'https://www.amazon.fr/dp/2226257012?tag=d3rf21-21',
+                    'img' => '/images/amazon-sapiens.webp',
+                    'alt' => 'Sapiens',
+                    'title' => 'Comment en est-on arrivé là, au juste ?',
+                    'quote' => '300 000 ans de mauvaises décisions expliqués.',
+                    'label' => 'LECTURE'
+                ],
+            ];
+
+            $content = $article['content'];
+            // Insérer un bloc affilié environ 1 fois sur 4-5 articles (basé sur l'ID)
+            $showAmazon = ($article['id'] % 5 <= 1); // ~40% des articles
+
+            if ($showAmazon) {
+                $product = $amazonProducts[$article['id'] % count($amazonProducts)];
+                $amazonBlock = '<div class="amazon-inline"><a href="' . htmlspecialchars($product['url']) . '" target="_blank" rel="nofollow noopener sponsored" class="amazon-box">'
+                    . '<img src="' . $product['img'] . '" alt="' . htmlspecialchars($product['alt']) . '" class="amazon-img" loading="lazy">'
+                    . '<div class="amazon-text"><span class="amazon-label">' . $product['label'] . '</span>'
+                    . '<h5>' . htmlspecialchars($product['title']) . '</h5>'
+                    . '<p>&laquo; ' . htmlspecialchars($product['quote']) . ' &raquo;</p>'
+                    . '<span class="amazon-cta">Découvrir &rarr;</span></div>'
+                    . '</a><small class="amazon-disclaimer">Lien affilié Amazon</small></div>';
+
+                // Insérer après le 2e ou 3e </p>
+                $pos = 0;
+                $insertAfter = 2 + ($article['id'] % 2); // 2e ou 3e paragraphe
+                for ($i = 0; $i < $insertAfter; $i++) {
+                    $pos = strpos($content, '</p>', $pos);
+                    if ($pos === false) break;
+                    $pos += 4;
+                }
+                if ($pos !== false && $pos > 0) {
+                    $content = substr($content, 0, $pos) . $amazonBlock . substr($content, $pos);
+                }
+            }
+
+            echo $content;
+            ?>
         </article>
 
         <!-- Share Buttons -->

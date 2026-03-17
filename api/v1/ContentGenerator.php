@@ -16,19 +16,22 @@ class ContentGenerator {
      * Le modèle peut s'en inspirer pour générer des titres percutants.
      */
     public const TITLE_TEMPLATES = [
-        // UNE idée, UNE phrase, immédiatement drôle
+        // Style tabloïd / 7sur7.be / 20 Minutes — phrases courtes, factuelles, une seule idée
         "Un maire interdit la pluie par arrêté municipal",
         "Un Français retrouvé vivant après 3 heures sans WiFi",
-        "La SNCF lance un train à l'heure, les usagers paniquent",
-        "Un chien élu président du comité des fêtes",
-        "Un Parisien trouve une place de parking, le SAMU intervient",
+        "Un chien élu président du comité des fêtes de Perpignan",
+        "Un Parisien trouve une place de parking et appelle le SAMU",
         "La CAF envoie un courrier de relance à un bébé de 3 jours",
-        "Un Breton invente la crêpe carrée, la Bretagne entre en résistance",
-        "Un couple divorce pour un désaccord sur le thermostat",
-        "Un influenceur atteint 10 abonnés, BFM lui consacre une édition spéciale",
+        "Un couple divorce après un désaccord sur le thermostat",
+        "Un influenceur atteint 10 abonnés et décroche un contrat BFM",
         "Un retraité du Var appelle la police car son voisin est heureux",
-        "Un village du Cantal interdit le bonheur après 22h",
-        "Un collégien rend un devoir si nul que l'Éducation nationale démissionne",
+        "Elle commande un café sans sucre et provoque un incident diplomatique",
+        "Il oublie son code PIN et se retrouve fiché par la Banque de France",
+        "Un Airbus atterrit à Beauvais avec 40 minutes d'avance : enquête ouverte",
+        "Un enfant de 7 ans rédige un meilleur programme que le RN",
+        "Sa commande Uber Eats arrive tiède : il porte plainte pour mise en danger",
+        "Un robot aspirateur s'échappe d'un appartement et parcourt 3 km",
+        "Il rate son créneau et bloque le périphérique pendant 45 minutes",
     ];
 
     /**
@@ -124,14 +127,27 @@ Tu es la VOIX anonyme de ToutVaMal.fr. Pas de "je", pas de mention de toi-même,
 - JAMAIS de moralisation. C'est du divertissement satirique, 100% second degré.
 
 === RÈGLE D'OR DES TITRES ===
-UNE idée. UNE phrase. Compréhensible en 2 secondes. Maximum 80 caractères.
-Le titre = [situation banale] + [conséquence absurde]. C'est TOUT.
-INTERDIT : jeux de mots, métaphores, deux idées mélangées, phrases alambiquées.
+Le titre doit ressembler à un VRAI titre de tabloïd ou de fil AFP. Comme sur 7sur7.be ou 20minutes.fr/insolite.
+UNE seule phrase. UNE seule idée. Maximum 80 caractères. Le lecteur doit comprendre en 2 secondes.
 
-BONS titres :
+STYLE : factuel et concis. On raconte UN FAIT avec un sujet, un verbe, un complément. L'absurdité vient du FAIT lui-même, pas d'une deuxième clause rajoutée.
+
+BONS titres (style tabloïd, naturels, comme de vrais titres de presse) :
 - {$titlesStr}
 
-MAUVAIS titres (à ne JAMAIS faire) :
+INTERDIT (titres en deux parties séparées par une virgule) :
+- "Un chat apprend à ouvrir des portes, la France s'effondre" ← NON, la 2e partie est un cliché
+- "Des panneaux pub deviennent des fiches de maths, le pays frôle la panique" ← NON, toujours le même schéma
+- "Un magasin ferme en oubliant un client, le plan Orsec déclenché" ← NON, ",  le/la [réaction]" = interdit
+- "Titre X, la France/l'État/le pays panique/s'effondre/déclenche Y" ← SCHÉMA INTERDIT
+
+Formulations BANNIES dans les titres (JAMAIS les utiliser) :
+- "la France s'effondre" / "le pays panique" / "l'État déclenche"
+- "la France découvre" / "le pays frôle" / "la République vacille"
+- "alerte nationale" / "plan Orsec" / "cellule de crise"
+- Toute structure "[fait], [la France/l'État + verbe dramatique]"
+
+MAUVAIS titres (aussi à ne JAMAIS faire) :
 - "La France cherche son étiquette avant la guerre civile" (incompréhensible)
 - "Le dossier rangé dans le tiroir Transparence" (jeu de mots obscur)
 - "Sanofi évince son patron et déclenche une alerte pactole" (2 idées + mot inventé)
@@ -171,17 +187,20 @@ On veut de l'INSOLITE transformé en drame absurde, PAS un vrai drame transform�
 
 ÉTAPE 2 — RÉDACTION (si l'info passe le filtre) :
 
-1. TITRE : UNE SEULE IDÉE, UNE SEULE PHRASE. Maximum 80 caractères.
+1. TITRE : Style TABLOÏD / FIL AFP. Maximum 80 caractères.
    RÈGLES STRICTES :
-   - UNE situation + UNE conséquence absurde. C'est tout. Pas deux idées, pas de sous-entendu compliqué.
-   - Le titre doit être compris en 2 secondes par quelqu'un qui ne connaît pas l'actu.
-   - Structure simple : "[Quelqu'un] [fait un truc anodin], [conséquence disproportionnée]"
-   - Pas de jeux de mots obscurs, pas de métaphores, pas de références culturelles nécessaires.
+   - UNE phrase simple et factuelle. Sujet + verbe + complément. C'est tout.
+   - Le titre raconte UN FAIT absurde, pas deux infos collées par une virgule.
+   - Il doit ressembler à un vrai titre de 7sur7.be, 20minutes.fr ou du fil AFP.
+   - INTERDIT : structure "[fait], [la France/l'État/le pays + réaction dramatique]"
+   - INTERDIT : "la France s'effondre", "l'État panique", "le pays découvre", "plan Orsec", "alerte nationale"
+   - INTERDIT : jeux de mots obscurs, métaphores, références culturelles
    - Pas de guillemets, pas de deux-points sauf pour situer ("Lyon :", "La SNCF :").
-   BON : "Un maire interdit la pluie par arrêté municipal"
-   BON : "Un Français retrouvé vivant après 3 heures sans WiFi"
-   MAUVAIS : "Le dossier Epstein rangé dans le tiroir Transparence" (incompréhensible)
-   MAUVAIS : "La France cherche son étiquette avant la guerre civile" (trop d'idées)
+   BON : "Un maire interdit la pluie par arrêté municipal" (factuel, drôle, une phrase)
+   BON : "Elle commande un café sans sucre et provoque un incident diplomatique" (une action, une conséquence naturelle)
+   BON : "Un Airbus atterrit à Beauvais avec 40 minutes d'avance : enquête ouverte" (style AFP)
+   MAUVAIS : "Un chat ouvre une porte, la France s'effondre" (deux clauses, cliché)
+   MAUVAIS : "Des panneaux pub deviennent des maths, le pays frôle la panique" (même schéma répétitif)
 
 2. CATÉGORIE : La plus appropriée parmi : {$categories}
 

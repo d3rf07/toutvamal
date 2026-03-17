@@ -90,7 +90,8 @@ include __DIR__ . '/templates/header.php';
                 <a href="/articles/<?= htmlspecialchars($article['slug']) ?>.html" class="article-card">
                     <div class="article-card-image">
                         <img src="<?= htmlspecialchars($article['image_path'] ?: '/images/placeholder.jpg') ?>"
-                             alt="<?= htmlspecialchars($article['title']) ?>">
+                             alt="<?= htmlspecialchars($article['title']) ?>"
+                             loading="lazy" width="400" height="225">
                     </div>
                     <div class="article-card-content">
                         <span class="badge badge-outline"><?= htmlspecialchars(CATEGORIES[$article['category']] ?? $article['category']) ?></span>
