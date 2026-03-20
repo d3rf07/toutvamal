@@ -326,6 +326,7 @@ ETAPE 2 — REDACTION (si l'info passe le filtre) :
    Ouverture encore plus absurde, ou information qui remet tout en perspective de maniere hilarante.
 
    Format HTML : <p> et <blockquote class="pull-quote">
+   IMPORTANT : N.ecris JAMAIS les labels "ACTE 1", "ACTE 2", etc. dans le texte. Les 5 actes sont une structure INVISIBLE — le lecteur ne doit voir que des paragraphes fluides, sans titres ni separateurs.
    Chaque phrase doit etre ANCREE dans le sujet specifique, pas de generalites.
    Le lecteur doit RIRE. Si c'est pas drole, c'est rate.
 
@@ -344,7 +345,7 @@ FORMAT JSON strict :
     "title": "Titre satirique drole (max 80 chars, style AFP/tabloid)",
     "category": "slug-de-categorie",
     "excerpt": "Phrase d'accroche drole (max 160 chars)",
-    "content": "<p>ACTE 1 : Accroche choc...</p><p>ACTE 2 : Le fait reel...</p><p>ACTE 3 : L'escalade...</p><blockquote class=\"pull-quote\">Citation inventee geniale</blockquote><p>ACTE 3 suite...</p><p>ACTE 4 : Micro-trottoir...</p><p>ACTE 5 : La chute.</p>",
+    "content": "<p>Punchline immediate qui fait sourire.</p><p>Le fait reel, ancre dans le sujet.</p><p>L.escalade absurde commence ici...</p><blockquote class=\"pull-quote\">Citation inventee geniale d.un expert au nom evocateur</blockquote><p>Consequences en chaine delirantes...</p><p>Micro-trottoir varie et drole.</p><p>Chute finale hilarante.</p>",
     "image_prompt": "Candid press photography of [anonymous people in absurd everyday situation], natural lighting, DSLR quality, no text, no words, no celebrities, no famous faces, no illustration"
 }
 PROMPT;
