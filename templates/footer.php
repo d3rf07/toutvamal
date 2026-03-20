@@ -21,6 +21,7 @@
                 <li><a href="/equipe.html">L'Équipe</a></li>
                 <li><a href="/a-propos.html">À Propos</a></li>
                 <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/archives.html">Archives</a></li>
             </ul>
         </div>
 
@@ -48,42 +49,88 @@
     </div>
 </footer>
 
+<style>
+.newsletter-feedback {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.newsletter-feedback.visible {
+    display: block;
+}
+.newsletter-feedback.fade-in {
+    opacity: 1;
+}
+.newsletter-feedback.success {
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.25);
+}
+.newsletter-feedback.error {
+    color: #C41E3A;
+    background: rgba(196, 30, 58, 0.08);
+    border: 1px solid rgba(196, 30, 58, 0.25);
+}
+</style>
 <script>
 // Newsletter form
 document.querySelectorAll('.newsletter-form').forEach(form => {
+    // Injecter le div de feedback après le formulaire
+    var feedback = document.createElement('div');
+    feedback.className = 'newsletter-feedback';
+    form.insertAdjacentElement('afterend', feedback);
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = form.querySelector('input[type="email"]').value;
-        const btn = form.querySelector('button');
-        const originalText = btn.textContent;
+        var email = form.querySelector('input[type="email"]').value;
+        var btn = form.querySelector('button');
+        var originalText = btn.textContent;
 
-        btn.textContent = 'Envoi...';
+        btn.textContent = 'Envoi en cours...';
         btn.disabled = true;
+        feedback.className = 'newsletter-feedback';
+        feedback.textContent = '';
 
         try {
-            const res = await fetch('/api/newsletter.php', {
+            var res = await fetch('/api/newsletter.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email: email })
             });
-            const data = await res.json();
+            var data = await res.json();
 
             if (data.success) {
-                btn.textContent = 'Inscrit !';
-                form.querySelector('input').value = '';
+                var msg = data.message || '';
+                if (msg === 'Vous êtes déjà inscrit') {
+                    showFeedback(feedback, 'success', 'Vous êtes déjà abonné au malheur. Patience, il arrive.');
+                } else {
+                    showFeedback(feedback, 'success', 'Bienvenue dans le malheur. Vous recevrez bientôt votre dose quotidienne de désespoir.');
+                    form.querySelector('input').value = '';
+                }
             } else {
-                btn.textContent = data.error || 'Erreur';
+                showFeedback(feedback, 'error', 'Même notre formulaire va mal. Réessayez plus tard.');
             }
         } catch (err) {
-            btn.textContent = 'Erreur réseau';
+            showFeedback(feedback, 'error', 'Même notre formulaire va mal. Réessayez plus tard.');
         }
 
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.disabled = false;
-        }, 3000);
+        btn.textContent = originalText;
+        btn.disabled = false;
     });
 });
+
+function showFeedback(el, type, msg) {
+    el.className = 'newsletter-feedback ' + type + ' visible';
+    el.textContent = msg;
+    // Forcer le reflow pour déclencher la transition
+    el.offsetHeight;
+    el.classList.add('fade-in');
+}
 </script>
 </body>
 </html>

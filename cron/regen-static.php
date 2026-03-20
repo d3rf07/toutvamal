@@ -59,11 +59,16 @@ foreach ($articles as $a) {
 }
 
 // --- 2. Regenerate homepage ---
+// IMPORTANT: Sauvegarder $articles avant l'include d'index.php qui écrase la variable
+$_articlesForSitemap = $articles;
 $_GET = [];
 $_SERVER["REQUEST_URI"] = "/";
 ob_start();
 include dirname(__DIR__) . "/index.php";
 $indexHtml = ob_get_clean();
+// Restaurer $articles pour le sitemap et le RSS
+$articles = $_articlesForSitemap;
+unset($_articlesForSitemap);
 file_put_contents(ROOT_PATH . "/index.html", $indexHtml);
 chmod(ROOT_PATH . "/index.html", 0644);
 
@@ -121,10 +126,10 @@ foreach ($staticPages as $page) {
     $sitemapXml .= "  </url>\n";
 }
 
-// Category pages
+// Category pages - URLs canoniques /categories/xxx (rewrite interne vers categorie.php)
 foreach (CATEGORIES as $catSlug => $catName) {
     $sitemapXml .= "  <url>\n";
-    $sitemapXml .= "    <loc>" . SITE_URL . "/?cat=" . $catSlug . "</loc>\n";
+    $sitemapXml .= "    <loc>" . SITE_URL . "/categories/" . $catSlug . "</loc>\n";
     $sitemapXml .= "    <changefreq>daily</changefreq>\n";
     $sitemapXml .= "    <priority>0.7</priority>\n";
     $sitemapXml .= "  </url>\n";
@@ -205,8 +210,8 @@ $rssXml .= "    <title>ToutVaMal.fr</title>\n";
 $rssXml .= "    <link>" . SITE_URL . "</link>\n";
 $rssXml .= "  </image>\n";
 
-// Last 20 articles
-$rssArticles = array_slice($articles, 0, 20);
+// Last 50 articles (augmenté de 20 à 50 pour meilleure couverture RSS)
+$rssArticles = array_slice($articles, 0, 50);
 foreach ($rssArticles as $article) {
     $articleUrl = SITE_URL . '/articles/' . htmlspecialchars($article['slug']) . '.html';
     $excerpt = htmlspecialchars($article['excerpt'] ?? substr(strip_tags($article['content']), 0, 300));

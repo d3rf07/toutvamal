@@ -1,7 +1,7 @@
 <?php
 /**
  * ToutVaMal.fr - Image Generator
- * Uses Replicate API with google/gemini-3-pro-image
+ * Uses Replicate API with black-forest-labs/flux-2-pro
  */
 
 class ImageGenerator {

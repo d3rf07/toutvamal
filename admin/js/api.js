@@ -1,48 +1,136 @@
 /**
  * ToutVaMal.fr - API Client v2
- * Wrapper pour toutes les interactions API
+ * Auth: cookie HttpOnly + token CSRF (plus de localStorage)
  */
 
 class ToutVaMalAPI {
-    constructor(baseUrl = '', token = '') {
+    constructor(baseUrl = '') {
         this.baseUrl = baseUrl || window.location.origin;
-        this.token = token || localStorage.getItem('tvm_api_token') || '';
         this.apiPath = '/api/v2';
+        this.csrfToken = null; // Chargé après login ou depuis meta tag
     }
 
     // ========== AUTH ==========
 
-    setToken(token) {
-        this.token = token;
-        localStorage.setItem('tvm_api_token', token);
+    /**
+     * Charge le token CSRF depuis le meta tag (injecté côté serveur)
+     * ou depuis l'objet courant
+     */
+    loadCsrfFromMeta() {
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta && meta.content) {
+            this.csrfToken = meta.content;
+        }
     }
 
-    clearToken() {
-        this.token = '';
-        localStorage.removeItem('tvm_api_token');
+    /**
+     * Effectue le login : envoie le token au backend qui pose le cookie HttpOnly
+     * et retourne le token CSRF
+     */
+    async login(token) {
+        const url = `${this.baseUrl}${this.apiPath}/login.php`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ token })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new APIError(data.error || 'Login failed', response.status, data);
+        }
+
+        // Stocker le token CSRF (le cookie est posé automatiquement par le serveur)
+        if (data.csrf) {
+            this.csrfToken = data.csrf;
+            // Mettre à jour le meta tag si présent
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) meta.content = data.csrf;
+        }
+
+        return data;
     }
 
-    isAuthenticated() {
-        return !!this.token;
+    /**
+     * Vérifie la session courante (cookie)
+     * Retourne { authenticated: bool, csrf: string|null }
+     */
+    async checkSession() {
+        const url = `${this.baseUrl}${this.apiPath}/login.php`;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+            if (data.authenticated && data.csrf) {
+                this.csrfToken = data.csrf;
+            }
+            return data;
+        } catch (e) {
+            return { authenticated: false, csrf: null };
+        }
+    }
+
+    /**
+     * Logout : supprime le cookie côté serveur
+     */
+    async logout() {
+        const url = `${this.baseUrl}${this.apiPath}/login.php`;
+        try {
+            await fetch(url, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+                headers: this._csrfHeaders()
+            });
+        } catch (e) {
+            // Ignorer les erreurs de logout
+        }
+        this.csrfToken = null;
+    }
+
+    /**
+     * Vérifie si la session est active (via checkSession)
+     */
+    async isAuthenticated() {
+        const session = await this.checkSession();
+        return session.authenticated === true;
     }
 
     // ========== HTTP ==========
 
+    /**
+     * Headers CSRF pour les requêtes d'écriture
+     */
+    _csrfHeaders() {
+        const headers = {};
+        if (this.csrfToken) {
+            headers['X-CSRF-Token'] = this.csrfToken;
+        }
+        return headers;
+    }
+
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
+        const method = (options.method || 'GET').toUpperCase();
+
         const headers = {
             'Content-Type': 'application/json',
             ...options.headers
         };
 
-        if (this.token) {
-            headers['Authorization'] = `Bearer ${this.token}`;
+        // Ajouter CSRF pour les mutations
+        if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+            Object.assign(headers, this._csrfHeaders());
         }
 
         try {
             const response = await fetch(url, {
                 ...options,
-                headers
+                headers,
+                credentials: 'same-origin' // Envoie le cookie automatiquement
             });
 
             const data = await response.json();
@@ -152,7 +240,7 @@ class ToutVaMalAPI {
         return this.post(`/generate.php?retry=${logId}`);
     }
 
-    // ========== NEWS (NEW) ==========
+    // ========== NEWS ==========
 
     async getAvailableNews() {
         return this.get('/news.php?action=available');
@@ -162,13 +250,13 @@ class ToutVaMalAPI {
         return this.post('/news.php?action=fetch');
     }
 
-    // ========== MODELS (NEW) ==========
+    // ========== MODELS ==========
 
     async getModels(type = 'all') {
         return this.get(`/models.php?type=${type}`);
     }
 
-    // ========== IMAGES (NEW) ==========
+    // ========== IMAGES ==========
 
     async getArticleImages(articleId) {
         return this.get(`/images.php?action=list&article_id=${articleId}`);
@@ -497,6 +585,13 @@ class FormHelpers {
 // ========== GLOBAL INSTANCE ==========
 
 const api = new ToutVaMalAPI();
+
+// Charger le CSRF depuis le meta tag dès que le DOM est prêt
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => api.loadCsrfFromMeta());
+} else {
+    api.loadCsrfFromMeta();
+}
 
 // Export for modules
 if (typeof module !== 'undefined' && module.exports) {

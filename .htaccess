@@ -1,4 +1,4 @@
-# ToutVaMal v3.0 - Configuration Apache
+# ToutVaMal v3.0 - Configuration Apache (SEO Optimized)
 
 # Enable rewrite
 <IfModule mod_rewrite.c>
@@ -8,6 +8,21 @@
     # Force HTTPS
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect /about.html to /a-propos.html
+    RewriteRule ^about\.html$ /a-propos.html [R=301,L]
+
+    # Rewrite /categories/xxx (clean URL, no extension) to categorie.php - 200 OK, URL canonique
+    RewriteRule ^categories/([a-z0-9-]+)/?$ /categorie.php?cat=$1 [L,QSA]
+
+    # Redirect old /categories/xxx.html URLs to clean /categories/xxx
+    RewriteRule ^categories/([a-z0-9-]+)\.html$ /categories/$1 [R=301,L]
+
+    # Rewrite /archives.html to archives.php
+    RewriteRule ^archives\.html$ /archives.php [L]
+
+    # Rewrite /categorie/xxx to categorie.php?cat=xxx
+    RewriteRule ^categorie/([a-z0-9-]+)/?$ /categorie.php?cat=$1 [L,QSA]
 </IfModule>
 
 # Security Headers
@@ -16,18 +31,21 @@
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
 </IfModule>
 
 # Block sensitive files
-<FilesMatch "^\.(htaccess|htpasswd|git|env|gitignore)$">
+<FilesMatch "^\.(htaccess|htpasswd|git|env|gitignore|user\.ini)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
 </FilesMatch>
 
-# Block database init and migration scripts
-<FilesMatch "(init_db\.php|migrate\.php)">
+# Block sensitive config and database init scripts
+<FilesMatch "^(config|init_db|migrate)\.php$">
     Require all denied
 </FilesMatch>
 
@@ -40,35 +58,40 @@
 # Prevent directory listing
 Options -Indexes
 
-# NO CACHE for HTML (development mode)
-<IfModule mod_headers.c>
-    <FilesMatch "\.(html|htm)$">
-        Header set Cache-Control "no-cache, no-store, must-revalidate"
-        Header set Pragma "no-cache"
-        Header set Expires "0"
-    </FilesMatch>
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
 </IfModule>
 
-# NO CACHE for JSON (liste.json)
+# Caching - Static assets (production)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    # Images
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    # CSS/JS
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
+
+# HTML cache - short cache for static articles
 <IfModule mod_headers.c>
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+    # No cache for JSON data
     <FilesMatch "liste\.json$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
         Header set Pragma "no-cache"
         Header set Expires "0"
     </FilesMatch>
-</IfModule>
-
-# Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
-</IfModule>
-
-# Caching for static assets (images only now)
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType image/webp "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 month"
-    ExpiresByType image/png "access plus 1 month"
 </IfModule>
 
 # Error pages

@@ -136,8 +136,35 @@ class Database {
 
     public static function deleteArticle(int $id): bool {
         $db = self::getInstance();
-        $stmt = $db->prepare("DELETE FROM articles WHERE id = :id");
-        return $stmt->execute([':id' => $id]);
+        try {
+            $db->beginTransaction();
+
+            // Clean references first to avoid FK constraint failures
+            $stmt = $db->prepare("UPDATE generation_logs SET article_id = NULL WHERE article_id = :id");
+            $stmt->execute([':id' => $id]);
+
+            // Optional table in some installs
+            try {
+                $stmt = $db->prepare("DELETE FROM seo_analytics WHERE article_id = :id");
+                $stmt->execute([':id' => $id]);
+            } catch (Exception $e) {
+                // ignore if table doesn't exist
+            }
+
+            $stmt = $db->prepare("DELETE FROM articles WHERE id = :id");
+            $ok = $stmt->execute([':id' => $id]);
+
+            if ($ok) {
+                $db->commit();
+                return true;
+            }
+
+            $db->rollBack();
+            return false;
+        } catch (Exception $e) {
+            if ($db->inTransaction()) $db->rollBack();
+            return false;
+        }
     }
 
     public static function countArticles(?string $category = null, ?string $status = null): int {
@@ -225,8 +252,30 @@ class Database {
 
     public static function deleteJournalist(int $id): bool {
         $db = self::getInstance();
-        $stmt = $db->prepare("DELETE FROM journalists WHERE id = :id");
-        return $stmt->execute([':id' => $id]);
+        try {
+            $db->beginTransaction();
+
+            // Preserve articles/logs by detaching journalist reference
+            $stmt = $db->prepare("UPDATE articles SET journalist_id = NULL WHERE journalist_id = :id");
+            $stmt->execute([':id' => $id]);
+
+            $stmt = $db->prepare("UPDATE generation_logs SET journalist_id = NULL WHERE journalist_id = :id");
+            $stmt->execute([':id' => $id]);
+
+            $stmt = $db->prepare("DELETE FROM journalists WHERE id = :id");
+            $ok = $stmt->execute([':id' => $id]);
+
+            if ($ok) {
+                $db->commit();
+                return true;
+            }
+
+            $db->rollBack();
+            return false;
+        } catch (Exception $e) {
+            if ($db->inTransaction()) $db->rollBack();
+            return false;
+        }
     }
 
     // ========== CONFIG ==========

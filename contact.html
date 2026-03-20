@@ -284,7 +284,7 @@
                 <h2>&Eacute;crivez-nous</h2>
                 <p class="subtitle">Nous lisons chaque message. Enfin, quand le moral le permet.</p>
 
-                <form class="contact-form" action="/api/v2/contact.php" method="POST">
+                <form class="contact-form" id="contact-form" action="/api/v2/contact.php" method="POST">
                     <div class="form-group">
                         <label for="name">Nom complet</label>
                         <input type="text" id="name" name="name" placeholder="Votre nom (ou pseudonyme de d&eacute;sespoir)" required>
@@ -414,5 +414,93 @@
             <p>&copy; 2026 ToutVaMal.fr - Site satirique. Toute ressemblance avec la r&eacute;alit&eacute; serait purement fortuite (ou pas).</p>
         </div>
     </footer>
+<style>
+.contact-feedback {
+    display: none;
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.contact-feedback.visible {
+    display: block;
+}
+.contact-feedback.fade-in {
+    opacity: 1;
+}
+.contact-feedback.success {
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.25);
+}
+.contact-feedback.error {
+    color: #C41E3A;
+    background: rgba(196, 30, 58, 0.08);
+    border: 1px solid rgba(196, 30, 58, 0.25);
+}
+</style>
+<script>
+(function() {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+
+    // Injecter le div de feedback après le bouton submit
+    var feedback = document.createElement('div');
+    feedback.className = 'contact-feedback';
+    form.appendChild(feedback);
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var btn = form.querySelector('button[type="submit"]');
+        var originalText = btn.textContent;
+        btn.textContent = 'Envoi en cours...';
+        btn.disabled = true;
+        feedback.className = 'contact-feedback';
+        feedback.textContent = '';
+
+        var formData = new FormData(form);
+        var data = {};
+        formData.forEach(function(val, key) { data[key] = val; });
+
+        try {
+            var res = await fetch('/api/v2/contact.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            var result = await res.json();
+
+            if (result.success) {
+                showFeedback(feedback, 'success', 'Message envoyé\u00a0! Notre équipe de déprimés le lira avec attention.');
+                form.reset();
+            } else {
+                var errMsg = result.error || '';
+                if (errMsg.indexOf('Trop de') !== -1) {
+                    showFeedback(feedback, 'error', 'Vous avez déjà beaucoup écrit. Laissez-nous ruminer un peu.');
+                } else {
+                    showFeedback(feedback, 'error', "L'envoi a échoué. Comme tout le reste.");
+                }
+            }
+        } catch (err) {
+            showFeedback(feedback, 'error', "L'envoi a échoué. Comme tout le reste.");
+        }
+
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
+
+    function showFeedback(el, type, msg) {
+        el.className = 'contact-feedback ' + type + ' visible';
+        el.textContent = msg;
+        el.offsetHeight; // force reflow
+        el.classList.add('fade-in');
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+})();
+</script>
 </body>
 </html>

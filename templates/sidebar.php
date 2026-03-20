@@ -40,8 +40,9 @@
         <p style="font-size: 0.875rem; color: var(--gris-500); margin-bottom: 1rem;">
             Recevez le pire de l'actualité directement dans votre boîte mail.
         </p>
-        <form class="newsletter-form">
-            <input type="email" placeholder="Votre email" required>
+        <form class="newsletter-form" method="post" action="/api/v2/newsletter.php" aria-label="Inscription newsletter">
+            <label for="newsletter-email" class="sr-only">Adresse email</label>
+            <input id="newsletter-email" name="email" type="email" placeholder="Votre email" autocomplete="email" inputmode="email" required aria-required="true">
             <button type="submit">S'abonner au désespoir</button>
         </form>
     </section>

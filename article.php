@@ -1,10 +1,11 @@
 <?php
 /**
- * ToutVaMal.fr - Article Page
- * Rebuild 2025-12-30
+ * ToutVaMal.fr - Article Page (SEO Optimized)
+ * Rebuild 2025-12-30, SEO update 2026-02-26
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/seo-functions.php';
 
 // Récupérer le slug depuis l'URL
 if (isset($_GET['slug'])) {
@@ -49,6 +50,7 @@ if (!$article) {
 $pageTitle = $article['title'] . ' - ' . SITE_NAME;
 $pageDescription = $article['excerpt'] ?? substr(strip_tags($article['content']), 0, 160);
 $ogImage = SITE_URL . $article['image_path'];
+$canonicalUrl = SITE_URL . '/articles/' . $article['slug'] . '.html';
 $currentCategory = $article['category'];
 
 // Schema NewsArticle JSON-LD
@@ -78,14 +80,33 @@ $articleSchema = [
     ],
     'mainEntityOfPage' => [
         '@type' => 'WebPage',
-        '@id' => SITE_URL . '/articles/' . $article['slug'] . '.html'
+        '@id' => $canonicalUrl
     ],
     'articleSection' => CATEGORIES[$article['category']] ?? $article['category'],
     'inLanguage' => 'fr-FR',
     'isAccessibleForFree' => true,
-    'url' => SITE_URL . '/articles/' . $article['slug'] . '.html'
+    'url' => $canonicalUrl,
+    'wordCount' => str_word_count(strip_tags($article['content'])),
+    'genre' => 'Satire',
+    'keywords' => 'satire,humour,actualité,France'
 ];
 $articleSchemaJson = json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+// Breadcrumbs
+// BreadcrumbList: garantir que name n'est jamais vide (GSC signale "Unnamed" sinon)
+$_catName = !empty(CATEGORIES[$article['category']]) ? CATEGORIES[$article['category']] : ucfirst($article['category']);
+$breadcrumbs = [
+    ['name' => 'Accueil', 'url' => SITE_URL . '/'],
+    ['name' => $_catName, 'url' => SITE_URL . '/categorie/' . $article['category']],
+    ['name' => !empty($article['title']) ? $article['title'] : SITE_NAME, 'url' => $canonicalUrl]
+];
+$breadcrumbSchema = schema_breadcrumbs($breadcrumbs);
+
+// Related articles
+$relatedArticles = get_related_articles($article["category"], $article["id"], 4);
+
+// Extra schema for header
+$extraSchema = $breadcrumbSchema;
 
 include __DIR__ . '/templates/header.php';
 ?>
@@ -93,17 +114,22 @@ include __DIR__ . '/templates/header.php';
 <!-- NewsArticle Schema -->
 <script type="application/ld+json"><?= $articleSchemaJson ?></script>
 
+<!-- Breadcrumbs -->
+<div class="container">
+    <?= render_breadcrumbs($breadcrumbs) ?>
+</div>
+
 <!-- Article Hero -->
 <section class="article-hero">
     <img src="<?= htmlspecialchars($article['image_path'] ?: '/images/placeholder.jpg') ?>"
          alt="<?= htmlspecialchars($article['title']) ?>"
-         loading="eager">
+         loading="eager" decoding="async">
     <div class="article-hero-content">
         <span class="badge"><?= htmlspecialchars(CATEGORIES[$article['category']] ?? $article['category']) ?></span>
         <h1><?= htmlspecialchars($article['title']) ?></h1>
         <div class="meta">
-            <span>Par <?= htmlspecialchars($article['journalist_name'] ?? 'La Rédaction') ?></span>
-            <span><?= format_date($article['published_at']) ?></span>
+            <span>Par <a href="/equipe/<?= htmlspecialchars($article['journalist_slug'] ?? '') ?>.html" style="color: inherit; text-decoration: underline;"><?= htmlspecialchars($article['journalist_name'] ?? 'La Rédaction') ?></a></span>
+            <span><time datetime="<?= date('c', strtotime($article['published_at'])) ?>"><?= format_date($article['published_at']) ?></time></span>
             <span><?= reading_time($article['content']) ?> min de lecture</span>
         </div>
     </div>
@@ -150,7 +176,7 @@ include __DIR__ . '/templates/header.php';
                 ],
             ];
 
-            $content = $article['content'];
+            $content = strip_tags($article['content'], '<p><blockquote><em><strong>'); // Sanitize: whitelist safe HTML tags only
             // Insérer un bloc affilié environ 1 fois sur 4-5 articles (basé sur l'ID)
             $showAmazon = ($article['id'] % 5 <= 1); // ~40% des articles
 
@@ -181,31 +207,103 @@ include __DIR__ . '/templates/header.php';
             ?>
         </article>
 
-        <!-- Share Buttons -->
-        <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?text=<?= urlencode($article['title']) ?>&url=<?= urlencode(SITE_URL . '/articles/' . $article['slug'] . '.html') ?>"
-               target="_blank" rel="noopener" class="share-btn twitter">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                Partager sur X
-            </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(SITE_URL . '/articles/' . $article['slug'] . '.html') ?>"
-               target="_blank" rel="noopener" class="share-btn facebook">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                Partager
-            </a>
-            <button class="share-btn copy" onclick="navigator.clipboard.writeText(window.location.href); this.textContent='Copié !'">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                Copier le lien
-            </button>
+        <!-- Share Bar -->
+        <style>
+        .share-bar {
+            background: #111;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .share-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        .share-buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.15s ease;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .share-btn:hover { opacity: 0.85; }
+        .share-twitter { background: #1DA1F2; color: #fff; }
+        .share-facebook { background: #1877F2; color: #fff; }
+        .share-whatsapp { background: #25D366; color: #fff; }
+        .share-copy {
+            background: transparent;
+            color: #e0e0e0;
+            border: 1px solid #666;
+        }
+        .share-copy:hover { border-color: #999; }
+        @media (max-width: 480px) {
+            .share-buttons-row { gap: 0.5rem; }
+            .share-btn { padding: 7px 12px; font-size: 0.8125rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .share-btn { transition: none; }
+        }
+        </style>
+        <div class="share-bar">
+            <span class="share-label">Partager cette catastrophe</span>
+            <div class="share-buttons-row">
+                <a href="https://twitter.com/intent/tweet?text=<?= urlencode($article['title']) ?>&url=<?= urlencode($canonicalUrl) ?>"
+                   target="_blank" rel="noopener"
+                   class="share-btn share-twitter"
+                   aria-label="Partager sur Twitter">&#x1D54F;</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($canonicalUrl) ?>"
+                   target="_blank" rel="noopener"
+                   class="share-btn share-facebook"
+                   aria-label="Partager sur Facebook">f</a>
+                <a href="https://wa.me/?text=<?= urlencode($article['title'] . ' ' . $canonicalUrl) ?>"
+                   target="_blank" rel="noopener"
+                   class="share-btn share-whatsapp"
+                   aria-label="Partager sur WhatsApp">WhatsApp</a>
+                <button class="share-btn share-copy"
+                        aria-label="Copier le lien de l'article"
+                        onclick="
+                            var btn = this;
+                            var original = btn.textContent;
+                            navigator.clipboard.writeText(window.location.href).then(function() {
+                                btn.textContent = 'Lien copie !';
+                                btn.setAttribute('aria-live', 'polite');
+                                setTimeout(function() { btn.textContent = original; }, 2000);
+                            }).catch(function() {
+                                btn.textContent = 'Erreur';
+                                setTimeout(function() { btn.textContent = original; }, 2000);
+                            });
+                        ">Copier</button>
+            </div>
         </div>
 
         <!-- Author Card -->
         <?php if ($article['journalist_name']): ?>
         <div class="author-card">
-            <img src="<?= htmlspecialchars($article['journalist_photo'] ?: '/images/equipe/default.jpg') ?>"
-                 alt="<?= htmlspecialchars($article['journalist_name']) ?>">
+            <a href="/equipe/<?= htmlspecialchars($article['journalist_slug'] ?? '') ?>.html">
+                <img src="<?= htmlspecialchars($article['journalist_photo'] ?: '/images/equipe/default.jpg') ?>"
+                     alt="<?= htmlspecialchars($article['journalist_name']) ?>">
+            </a>
             <div class="author-card-info">
-                <h4><?= htmlspecialchars($article['journalist_name']) ?></h4>
+                <h4><a href="/equipe/<?= htmlspecialchars($article['journalist_slug'] ?? '') ?>.html" style="color: inherit; text-decoration: none;"><?= htmlspecialchars($article['journalist_name']) ?></a></h4>
                 <p class="role"><?= htmlspecialchars($article['journalist_role']) ?></p>
                 <p class="bio"><?= htmlspecialchars($article['journalist_bio'] ?? '') ?></p>
             </div>
@@ -215,11 +313,14 @@ include __DIR__ . '/templates/header.php';
         <!-- Source -->
         <?php if ($article['source_url']): ?>
         <p style="font-size: 0.875rem; color: var(--gris-500); margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--gris-300);">
-            Source : <a href="<?= htmlspecialchars($article['source_url']) ?>" target="_blank" rel="noopener" style="color: var(--rouge);">
+            Source : <a href="<?= htmlspecialchars($article['source_url']) ?>" target="_blank" rel="noopener nofollow" style="color: var(--rouge);">
                 <?= htmlspecialchars($article['source_title'] ?? 'Article original') ?>
             </a>
         </p>
         <?php endif; ?>
+
+        <!-- Related Articles -->
+        <?= render_related_articles($relatedArticles) ?>
     </div>
 
     <?php include __DIR__ . '/templates/sidebar.php'; ?>

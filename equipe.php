@@ -37,7 +37,7 @@ include __DIR__ . '/templates/header.php';
                         <h3><?= htmlspecialchars($member['name']) ?></h3>
                         <p class="equipe-member-role"><?= htmlspecialchars($member['role']) ?></p>
                         <?php if (!empty($member['bio'])): ?>
-                        <p class="equipe-member-bio"><?= htmlspecialchars(mb_substr($member['bio'], 0, 200)) ?><?= mb_strlen($member['bio']) > 200 ? '...' : '' ?></p>
+                        <p class="equipe-member-bio"><?= htmlspecialchars($member['bio']) ?></p>
                         <?php endif; ?>
                     </div>
                 </a>

@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Allow extensionless API routes e.g. /api/v2/articles -> /api/v2/articles.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ $1.php [L,QSA]
+
+# Security headers inheritance handled by parent .htaccess

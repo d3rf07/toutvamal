@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToutVaMal.fr - C&#039;ÉTAIT MIEUX AVANT</title>
+    <meta name="description" content="Les pires nouvelles du jour, tous les jours. Parce que tout va mal.">
+
+    <link rel="canonical" href="https://toutvamal.fr/index.php">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ToutVaMal.fr - C&#039;ÉTAIT MIEUX AVANT">
+    <meta property="og:description" content="Les pires nouvelles du jour, tous les jours. Parce que tout va mal.">
+    <meta property="og:image" content="https://toutvamal.fr/images/og-default.jpg">
+    <meta property="og:url" content="https://toutvamal.fr/index.php">
+
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<!-- Breaking News Ticker -->
+<div class="ticker">
+    <div class="ticker-label">ALERTE</div>
+    <div class="ticker-content">
+                    <a href="/articles/les-chats-desertent-instagram-panique-generale.html" class="ticker-item">
+                Les chats désertent Instagram, panique générale            </a>
+                    <a href="/articles/livraisons-de-pizza-stoppees-le-pays-en-emoi.html" class="ticker-item">
+                Livraisons de pizza stoppées, le pays en émoi            </a>
+                    <a href="/articles/chants-doiseaux-en-baisse-selon-lobservatoire-ornithologique.html" class="ticker-item">
+                Chants d&#039;oiseaux en baisse selon l&#039;Observatoire Ornithologique            </a>
+                            <a href="/articles/les-chats-desertent-instagram-panique-generale.html" class="ticker-item">
+                Les chats désertent Instagram, panique générale            </a>
+                    <a href="/articles/livraisons-de-pizza-stoppees-le-pays-en-emoi.html" class="ticker-item">
+                Livraisons de pizza stoppées, le pays en émoi            </a>
+                    <a href="/articles/chants-doiseaux-en-baisse-selon-lobservatoire-ornithologique.html" class="ticker-item">
+                Chants d&#039;oiseaux en baisse selon l&#039;Observatoire Ornithologique            </a>
+            </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-inner">
+        <div class="header-date">Mardi 30 décembre 2025</div>
+        <div class="header-logo">
+            <a href="/" class="logo">TOUT<span>VA</span>MAL</a>
+            <div class="tagline">C'ÉTAIT MIEUX AVANT</div>
+        </div>
+        <div class="header-newsletter">
+            <a href="#newsletter">S'abonner</a>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation -->
+<nav class="nav">
+    <div class="nav-inner">
+        <ul class="nav-list">
+            <li><a href="/" class="nav-item active">Tout</a></li>
+                            <li><a href="/?cat=chaos-politique" class="nav-item ">Chaos Politique</a></li>
+                            <li><a href="/?cat=effondrement-economique" class="nav-item ">Effondrement Économique</a></li>
+                            <li><a href="/?cat=declin-societal" class="nav-item ">Déclin Sociétal</a></li>
+                            <li><a href="/?cat=desastre-ecologique" class="nav-item ">Désastre Écologique</a></li>
+                            <li><a href="/?cat=fiasco-technologique" class="nav-item ">Fiasco Technologique</a></li>
+                            <li><a href="/?cat=crise-sanitaire" class="nav-item ">Crise Sanitaire</a></li>
+                    </ul>
+    </div>
+</nav>
+
+<main class="container main-layout">
+    <div class="content">
+                <!-- Hero Section -->
+        <section class="hero">
+            <a href="/articles/les-chats-desertent-instagram-panique-generale.html" class="hero-main">
+                <img src="/images/articles/les-chats-desertent-instagram-panique-generale.webp"
+                     alt="Les chats désertent Instagram, panique générale">
+                <div class="hero-main-overlay">
+                    <span class="badge">Déclin Sociétal</span>
+                    <h2>Les chats désertent Instagram, panique générale</h2>
+                    <div class="meta">
+                        <span>La Rédaction</span>
+                        <span>30 décembre 2025</span>
+                        <span>2 min de lecture</span>
+                    </div>
+                </div>
+            </a>
+
+            <div class="hero-sidebar">
+                                <a href="/articles/livraisons-de-pizza-stoppees-le-pays-en-emoi.html" class="hero-card">
+                    <img src="/images/articles/livraisons-de-pizza-stoppees-le-pays-en-emoi.webp"
+                         alt="Livraisons de pizza stoppées, le pays en émoi">
+                    <div class="hero-card-overlay">
+                        <span class="badge" style="font-size: 0.625rem; padding: 0.125rem 0.5rem;">
+                            Déclin Sociétal                        </span>
+                        <h3>Livraisons de pizza stoppées, le pays en émoi</h3>
+                    </div>
+                </a>
+                                <a href="/articles/chants-doiseaux-en-baisse-selon-lobservatoire-ornithologique.html" class="hero-card">
+                    <img src="/images/articles/chants-doiseaux-en-baisse-selon-lobservatoire-ornithologique.webp"
+                         alt="Chants d&#039;oiseaux en baisse selon l&#039;Observatoire Ornithologique">
+                    <div class="hero-card-overlay">
+                        <span class="badge" style="font-size: 0.625rem; padding: 0.125rem 0.5rem;">
+                            Désastre Écologique                        </span>
+                        <h3>Chants d&#039;oiseaux en baisse selon l&#039;Observatoire Ornithologique</h3>
+                    </div>
+                </a>
+                            </div>
+        </section>
+        
+        <!-- Articles Grid -->
+            </div>
+
+    <!-- Sidebar -->
+<aside class="sidebar">
+    <!-- Newsletter -->
+    <section class="sidebar-section" id="newsletter">
+        <h4>Newsletter</h4>
+        <p style="font-size: 0.875rem; color: var(--gris-500); margin-bottom: 1rem;">
+            Recevez le pire de l'actualité directement dans votre boîte mail.
+        </p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Votre email" required>
+            <button type="submit">S'abonner au désespoir</button>
+        </form>
+    </section>
+
+    <!-- L'Équipe -->
+    <section class="sidebar-section">
+        <h4>L'Équipe</h4>
+        <p style="font-size: 0.875rem; color: var(--gris-500); margin-bottom: 1rem;">
+            Nos journalistes du malheur vous informent quotidiennement.
+        </p>
+        <a href="/equipe.html" style="display: inline-block; color: var(--rouge); font-weight: 600; font-size: 0.875rem;">
+            Découvrir la rédaction &rarr;
+        </a>
+    </section>
+
+    <!-- À Propos -->
+    <section class="sidebar-section">
+        <h4>À Propos</h4>
+        <p style="font-size: 0.875rem; color: var(--gris-500); margin-bottom: 1rem;">
+            ToutVaMal.fr : le site qui prouve que c'était vraiment mieux avant.
+        </p>
+        <a href="/a-propos.html" style="display: inline-block; color: var(--rouge); font-weight: 600; font-size: 0.875rem;">
+            En savoir plus &rarr;
+        </a>
+    </section>
+</aside>
+</main>
+
+<!-- Team Section -->
+<section class="team-section">
+    <h2>La Rédaction du Malheur</h2>
+    <div class="team-grid">
+                <a href="/equipe/jean-michel-deparve.html" class="team-card">
+            <img src="/equipe/jean-michel-deparve.webp"
+                 alt="Jean-Michel Deparve">
+            <h4>Jean-Michel Deparve</h4>
+            <p>Rédacteur en chef perpétuellement las</p>
+        </a>
+                <a href="/equipe/martine-nostalvielle.html" class="team-card">
+            <img src="/equipe/martine-nostalvielle.webp"
+                 alt="Martine Nostalvielle">
+            <h4>Martine Nostalvielle</h4>
+            <p>Spécialiste du &quot;c&#039;était mieux avant&quot;</p>
+        </a>
+                <a href="/equipe/pierre-castastroche.html" class="team-card">
+            <img src="/equipe/pierre-castastroche.webp"
+                 alt="Pierre Castastroche">
+            <h4>Pierre Castastroche</h4>
+            <p>Expert en fins du monde quotidiennes</p>
+        </a>
+                <a href="/equipe/chloe-deglingace.html" class="team-card">
+            <img src="/equipe/chloe-deglingace.webp"
+                 alt="Chloé Deglingace">
+            <h4>Chloé Deglingace</h4>
+            <p>Stagiaire perpétuellement désabusée</p>
+        </a>
+                <a href="/equipe/bernard-bourose.html" class="team-card">
+            <img src="/equipe/bernard-bourose.webp"
+                 alt="Bernard Bourose">
+            <h4>Bernard Bourose</h4>
+            <p>Correspondant territorial du désespoir</p>
+        </a>
+            </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="logo">TOUT<span>VA</span>MAL</div>
+            <div class="tagline">C'ÉTAIT MIEUX AVANT</div>
+            <div class="footer-social">
+                <a href="https://twitter.com/toutvamal" target="_blank" rel="noopener" aria-label="Twitter">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://facebook.com/toutvamal" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h5>Navigation</h5>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/equipe.html">L'Équipe</a></li>
+                <li><a href="/a-propos.html">À Propos</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h5>Rubriques</h5>
+            <ul>
+                                    <li><a href="/?cat=chaos-politique">Chaos Politique</a></li>
+                                    <li><a href="/?cat=effondrement-economique">Effondrement Économique</a></li>
+                                    <li><a href="/?cat=declin-societal">Déclin Sociétal</a></li>
+                                    <li><a href="/?cat=desastre-ecologique">Désastre Écologique</a></li>
+                                    <li><a href="/?cat=fiasco-technologique">Fiasco Technologique</a></li>
+                                    <li><a href="/?cat=crise-sanitaire">Crise Sanitaire</a></li>
+                            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h5>Légal</h5>
+            <ul>
+                <li><a href="/mentions-legales.html">Mentions légales</a></li>
+                <li><a href="/cgu.html">CGU</a></li>
+                <li><a href="/confidentialite.html">Confidentialité</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 ToutVaMal.fr - Site satirique. Toute ressemblance avec la réalité serait purement fortuite (ou pas).</p>
+    </div>
+</footer>
+
+<script>
+// Newsletter form
+document.querySelectorAll('.newsletter-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.querySelector('input[type="email"]').value;
+        const btn = form.querySelector('button');
+        const originalText = btn.textContent;
+
+        btn.textContent = 'Envoi...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/newsletter.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                btn.textContent = 'Inscrit !';
+                form.querySelector('input').value = '';
+            } else {
+                btn.textContent = data.error || 'Erreur';
+            }
+        } catch (err) {
+            btn.textContent = 'Erreur réseau';
+        }
+
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }, 3000);
+    });
+});
+</script>
+</body>
+</html>

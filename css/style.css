@@ -1,8 +1,6 @@
 /* ToutVaMal.fr - Rebuild 2025-12-30 */
 
 /* === IMPORTS === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-
 /* === VARIABLES === */
 :root {
     --rouge: #C41E3A;
@@ -573,7 +571,7 @@ ul, ol {
 }
 
 .footer-brand .tagline {
-    color: var(--gris-500);
+    color: #9CA3AF;
     margin-bottom: 1rem;
 }
 
@@ -583,7 +581,7 @@ ul, ol {
 }
 
 .footer-social a {
-    color: var(--gris-500);
+    color: #9CA3AF;
     transition: color 0.2s;
 }
 
@@ -606,7 +604,7 @@ ul, ol {
 
 .footer-column a {
     font-size: 0.875rem;
-    color: var(--gris-500);
+    color: #9CA3AF;
     transition: color 0.2s;
 }
 
@@ -620,7 +618,7 @@ ul, ol {
     padding-top: 2rem;
     text-align: center;
     font-size: 0.75rem;
-    color: var(--gris-500);
+    color: #9CA3AF;
 }
 
 /* === ARTICLE PAGE === */
@@ -1362,3 +1360,98 @@ ul, ol {
 .text-center { text-align: center; }
 .mt-2 { margin-top: 2rem; }
 .mb-2 { margin-bottom: 2rem; }
+
+
+/* === ACCESSIBILITE - FOCUS VISIBLE === */
+:focus-visible {
+    outline: 2px solid #C41E3A;
+    outline-offset: 2px;
+}
+
+/* Reset pour les clics souris */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* === PERFORMANCE - REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+    .ticker-content, .ticker-wrap, [class*="scroll"], [class*="marquee"] {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* === ARTICLES SIMILAIRES === */
+.related-articles {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #111827;
+}
+
+.related-articles h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--noir);
+    margin-bottom: 1.5rem;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.related-card {
+    display: block;
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--blanc);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .related-card {
+        transition: none;
+    }
+}
+
+.related-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.related-card-content {
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.related-card-content .badge {
+    margin-bottom: 0.6rem;
+    font-size: 0.7rem;
+}
+
+.related-card-content h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.35;
+    color: #e0e0e0;
+}
+
+.badge-small {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+}

@@ -14,12 +14,12 @@ class AdminApp {
 
     // ========== INITIALIZATION ==========
 
-    init() {
-        // Check for stored token
-        const token = localStorage.getItem('tvm_api_token');
-        if (token) {
-            this.api.setToken(token);
-            this.validateToken();
+    async init() {
+        // Verifier la session via cookie HttpOnly (plus de localStorage)
+        const session = await this.api.checkSession();
+        if (session.authenticated) {
+            this.showAdmin();
+            this.loadInitialData();
         } else {
             this.showLogin();
         }
@@ -100,29 +100,29 @@ class AdminApp {
         const errorEl = document.getElementById('login-error');
 
         try {
-            this.api.setToken(token);
-            const response = await this.api.getDashboardStats();
+            // Le backend pose le cookie HttpOnly et retourne le CSRF token
+            await this.api.login(token);
             this.showAdmin();
             this.loadDashboard();
         } catch (error) {
             errorEl.textContent = 'Token invalide';
-            this.api.clearToken();
         }
     }
 
     async validateToken() {
+        // Maintenu pour compatibilite, mais init() gere deja la session
         try {
             await this.api.getDashboardStats();
             this.showAdmin();
             this.loadInitialData();
         } catch (error) {
-            this.api.clearToken();
             this.showLogin();
         }
     }
 
-    logout() {
-        this.api.clearToken();
+    async logout() {
+        // Supprimer le cookie cote serveur + nettoyer CSRF
+        await this.api.logout();
         this.showLogin();
     }
 
