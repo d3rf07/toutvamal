@@ -115,7 +115,7 @@ PROMPT;
         $filterPrompt .= $filterTitle . "\nRésumé : " . $filterSummary;
 
         $filterPayload = json_encode([
-            'model'       => 'anthropic/claude-haiku-4-5-20251001',
+            'model'       => 'anthropic/claude-haiku-4.5',
             'messages'    => [['role' => 'user', 'content' => $filterPrompt]],
             'max_tokens'  => 100,
             'temperature' => 0.1,
@@ -153,7 +153,7 @@ PROMPT;
         }
 
         $verdict = strtoupper(trim($filterResult['verdict'] ?? 'GO'));
-        $score   = (int)($filterResult['score'] ?? 5);
+        $score   = (int)($filterResult['score'] ?? 8);
         $raison  = $filterResult['raison'] ?? 'n/a';
 
         log_info("FILTER [{$verdict}|{$score}] {$filterTitle} — {$raison}");
