@@ -79,6 +79,103 @@ foreach ($allItems as $item) {
         continue;
     }
     
+    // 2b. Pré-filtre IA éditorial — évalue si la news est adaptée au ton ToutVaMal
+    // Modèle léger Haiku (~$0.25/M tokens). Si erreur API -> laisser passer (fail-open).
+    try {
+        $filterTitle   = $item['title'] ?? '';
+        $filterSummary = substr(strip_tags($item['description'] ?? ''), 0, 500);
+
+        $filterPrompt = <<<'PROMPT'
+Tu es un filtre éditorial pour ToutVaMal.fr, un site satirique qui traite les news insolites comme des catastrophes nationales.
+
+Évalue cette news et réponds UNIQUEMENT en JSON :
+{"verdict": "GO" ou "SKIP", "score": 1-10, "raison": "..."}
+
+Critères GO (insolite, drôle, potentiel satirique) :
+- Animaux faisant des choses inattendues
+- Bureaucratie absurde
+- Records idiots
+- Tech ridicule
+- Food/cuisine bizarre
+- Sport improbable
+- Découvertes scientifiques cocasses
+
+Critères SKIP (grave, triste, pas drôle) :
+- Mort, maladie grave, accident mortel
+- Guerre, terrorisme, attentat
+- Violence, agression, meurtre
+- Discrimination, racisme
+- Catastrophe naturelle avec victimes
+- Politique "sérieuse" (élections, réformes lourdes)
+- Pédocriminalité, abus
+
+News à évaluer :
+Titre :
+PROMPT;
+        $filterPrompt .= $filterTitle . "\nRésumé : " . $filterSummary;
+
+        $filterPayload = json_encode([
+            'model'       => 'anthropic/claude-haiku-4-5-20251001',
+            'messages'    => [['role' => 'user', 'content' => $filterPrompt]],
+            'max_tokens'  => 100,
+            'temperature' => 0.1,
+        ]);
+
+        $ch = curl_init('https://openrouter.ai/api/v1/chat/completions');
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $filterPayload,
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . OPENROUTER_API_KEY,
+                'HTTP-Referer: https://toutvamal.fr',
+                'X-Title: ToutVaMal Editorial Filter',
+            ],
+            CURLOPT_TIMEOUT => 15,
+        ]);
+        $filterResponse = curl_exec($ch);
+        $curlError = curl_error($ch);
+        curl_close($ch);
+
+        if ($curlError) {
+            throw new Exception("cURL: $curlError");
+        }
+
+        $filterData   = json_decode($filterResponse, true);
+        $filterRaw    = $filterData['choices'][0]['message']['content'] ?? '{}';
+
+        // Extraire le JSON même si le modèle ajoute du texte autour
+        if (preg_match('/\{[^}]+\}/', $filterRaw, $m)) {
+            $filterResult = json_decode($m[0], true) ?? [];
+        } else {
+            $filterResult = [];
+        }
+
+        $verdict = strtoupper(trim($filterResult['verdict'] ?? 'GO'));
+        $score   = (int)($filterResult['score'] ?? 5);
+        $raison  = $filterResult['raison'] ?? 'n/a';
+
+        log_info("FILTER [{$verdict}|{$score}] {$filterTitle} — {$raison}");
+        echo "  -> FILTER: {$verdict} (score {$score}) — {$raison}\n";
+
+        if ($verdict === 'SKIP') {
+            echo "  -> SKIP: Filtered by editorial AI\n";
+            $skipped++;
+            continue;
+        }
+
+        if ($score < 6) {
+            echo "  -> SKIP: Score {$score}/10 trop faible pour ToutVaMal\n";
+            $skipped++;
+            continue;
+        }
+
+    } catch (Exception $filterEx) {
+        // Fail-open : le filtre ne bloque jamais le pipeline
+        echo "  -> WARN: Filter failed (" . $filterEx->getMessage() . "), letting through\n";
+        log_error("FILTER_ERROR: " . $filterEx->getMessage() . " | " . ($item['title'] ?? ''));
+    }
     // 3. Générer l'article
     echo "  → GENERATING...\n";
     
